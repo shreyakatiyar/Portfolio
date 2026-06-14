@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { MapPin, ArrowUpRight } from 'lucide-react'
 import { fadeUp } from '@/lib/variants'
 
-const stack = ['React.js', 'Next.js','Javascript',  'Tailwind CSS', 'Framer Motion']
+const stack = ['React.js', 'Next.js','Javascript',  'Tailwind CSS','TypeScript', 'Framer Motion']
 
 const bentoStats = [
   { value: '1+', label: 'Yrs Experience', accent: '#3B82F6' },
@@ -187,16 +187,13 @@ export default function About() {
                 <div className="absolute bottom-5 left-5 right-5">
                   <div className="flex items-end justify-between gap-3">
                     <div>
-                      <p className="text-white font-bold text-base leading-tight">Shreya Katiyar</p>
+ 
                       <p className="text-slate-400 text-xs mt-0.5 flex items-center gap-1.5">
                         <MapPin className="w-3 h-3" />
-                        India — Remote
+                        India 
                       </p>
                     </div>
-                    <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-medium flex-shrink-0">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      Available
-                    </div>
+                    {/*  */}
                   </div>
                 </div>
               </div>

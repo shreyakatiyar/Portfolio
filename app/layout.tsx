@@ -1,10 +1,31 @@
 import type { Metadata } from 'next'
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
+import { Plus_Jakarta_Sans, Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import CustomCursor from '@/components/ui/CustomCursor'
 import SmoothScroll from '@/components/ui/SmoothScroll'
 import ScrollProgress from '@/components/ui/ScrollProgress'
+import ThemeToggle from '@/components/ui/ThemeToggle'
+import { ThemeProvider } from '@/components/providers/ThemeProvider'
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-heading',
+  display: 'swap',
+  weight: ['400', '500', '600', '700', '800'],
+})
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-body',
+  display: 'swap',
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+  weight: ['400', '500', '600'],
+})
 
 export const metadata: Metadata = {
   title: 'Shreya Katiyar — Frontend Developer',
@@ -36,23 +57,22 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://shreyakatiyar.dev'),
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
-      className={`${GeistSans.variable} ${GeistMono.variable}`}
+      className={`${plusJakartaSans.variable} ${inter.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
-      <body className="font-sans bg-[#0F172A] text-[#F8FAFC] antialiased">
-        <SmoothScroll>
-          <CustomCursor />
-          <ScrollProgress />
-          {children}
-        </SmoothScroll>
+      <body className="font-body antialiased">
+        <ThemeProvider>
+          <SmoothScroll>
+            <CustomCursor />
+            <ScrollProgress />
+            {children}
+            <ThemeToggle />
+          </SmoothScroll>
+        </ThemeProvider>
       </body>
     </html>
   )

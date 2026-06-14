@@ -101,7 +101,7 @@ export default function Contact() {
             <div>
               <h3 className="text-lg font-semibold text-slate-50 mb-2">Get in touch</h3>
               <p className="text-slate-50/75 text-sm leading-relaxed">
-                Currently available for freelance work, full-time roles, and interesting collaborations.
+                Currently available for freelance work or full-time roles.
                 Let&apos;s build something great together.
               </p>
             </div>

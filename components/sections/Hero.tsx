@@ -26,8 +26,8 @@ export default function Hero() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    let width = (canvas.width = window.innerWidth)
-    let height = (canvas.height = window.innerHeight)
+    let width = (canvas.width = document.documentElement.clientWidth)
+    let height = (canvas.height = document.documentElement.clientHeight)
     let animId: number
 
     const particles: { x: number; y: number; r: number; vx: number; vy: number; alpha: number }[] = []
@@ -62,8 +62,8 @@ export default function Hero() {
     draw()
 
     const onResize = () => {
-      width = canvas.width = window.innerWidth
-      height = canvas.height = window.innerHeight
+      width = canvas.width = document.documentElement.clientWidth
+      height = canvas.height = document.documentElement.clientHeight
     }
     window.addEventListener('resize', onResize)
     return () => {
@@ -162,28 +162,25 @@ export default function Hero() {
           </motion.p>
 
           {/* CTA buttons */}
-          <motion.div variants={heroItem} className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10">
-            <div className="btn-animated-border rounded-xl p-[1px] inline-flex">
-              <Link
-                href="#projects"
-                className="inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white rounded-[11px] px-6 py-3 font-semibold transition-colors duration-300 shadow-lg shadow-blue-500/20"
-              >
-                View My Work
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-            <div className="btn-animated-border rounded-xl p-[1px] inline-flex">
-              <a
-                href="/shreya_online_1.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                download
-                className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-slate-100 rounded-[11px] px-6 py-3 font-semibold transition-colors duration-300"
-              >
-                <Download className="w-4 h-4" />
-                Resume
-              </a>
-            </div>
+          <motion.div variants={heroItem} className="flex flex-col sm:flex-row gap-4 items-center justify-center lg:justify-start mb-10">
+            <Link
+              href="#projects"
+              onClick={(e) => { e.preventDefault(); document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }) }}
+              className="inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white rounded-xl px-6 py-3 font-semibold transition-colors duration-300 shadow-lg shadow-blue-500/20"
+            >
+              View My Work
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <a
+              href="/shreya_online_1.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              download
+              className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-100 rounded-xl px-6 py-3 font-semibold transition-colors duration-300 border border-slate-600/40"
+            >
+              <Download className="w-4 h-4" />
+              Resume
+            </a>
           </motion.div>
 
           {/* Social links */}
@@ -251,23 +248,24 @@ export default function Hero() {
 
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-500"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 0.8 }}
-      >
+      {/* Scroll indicator — static wrapper handles centering, motion.div handles animation only */}
+      <div className="absolute bottom-8 inset-x-0 flex justify-center pointer-events-none">
         <motion.div
-          className="flex flex-col items-center gap-2"
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 0.8 }}
+          className="flex flex-col items-center gap-2 text-slate-500"
         >
-          <span className="text-[10px] tracking-[0.3em] uppercase text-slate-50">Scroll</span>
-          <div className="w-px h-8 bg-gradient-to-b from-slate-400/50 to-transparent" />
+          <motion.div
+            className="flex flex-col items-center gap-2"
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <span className="text-[10px] tracking-[0.3em] uppercase text-slate-50">Scroll</span>
+            <div className="w-px h-8 bg-gradient-to-b from-slate-400/50 to-transparent" />
+          </motion.div>
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   )
 }

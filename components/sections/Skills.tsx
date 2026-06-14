@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState, useMemo } from 'react'
 import { motion, useInView } from 'framer-motion'
+import { useTheme } from 'next-themes'
 import { skillCategories } from '@/lib/data'
 import { fadeUp } from '@/lib/variants'
 
@@ -147,8 +148,9 @@ const SKILL_NODES: NetworkNode[] = [
   { id: 'postman',   name: 'Postman',        abbr: 'Pm',   level: 85, x: 76, y: 73, exploring: false },
   { id: 'framer',    name: 'Framer Motion',  abbr: 'Fr',   level: 78, x: 47, y: 13, exploring: false },
   { id: 'figma',     name: 'Figma',          abbr: 'Fi',   level: 75, x: 62, y: 13, exploring: false },
+  { id: 'ts',        name: 'TypeScript',     abbr: 'TS',   level: 55, x: 85, y: 25, exploring: false },
   // Exploring
-  { id: 'ts',        name: 'TypeScript',     abbr: 'TS',   level: 55, x: 85, y: 25, exploring: true },
+
   { id: 'anim',      name: 'Hard Animation', abbr: 'Anim', level: 35, x: 13, y: 68, exploring: true },
   { id: 'express',   name: 'Express',        abbr: 'Ex',   level: 40, x: 88, y: 70, exploring: true },
   { id: 'go',        name: 'Go',             abbr: 'Go',   level: 25, x: 8,  y: 42, exploring: true },
@@ -163,12 +165,16 @@ const SKILL_EDGES: [string, string][] = [
   ['css3', 'bootstrap'], ['api', 'bootstrap'], ['api', 'postman'],
   ['docker', 'postman'], ['docker', 'ts'], ['docker', 'express'],
   ['ts', 'go'], ['anim', 'go'], ['anim', 'css3'],
+  ['ts', 'figma'], ['ts', 'express'],
+  ['git', 'react'], ['git', 'go55'], ['git', 'nextjs'],
 ]
 
 function SkillNetwork() {
   const networkRef = useRef<HTMLDivElement>(null)
   const inView = useInView(networkRef, { once: true, amount: 0.3 })
   const [hovered, setHovered] = useState<string | null>(null)
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme !== 'light'
 
   const connectedSet = useMemo(() => {
     if (!hovered) return new Set<string>()
@@ -188,7 +194,7 @@ function SkillNetwork() {
       transition={{ duration: 0.8, delay: 0.1 }}
       className="mt-12"
     >
-      <p className="text-center text-slate-500 text-xs mb-6 uppercase tracking-widest">
+      <p className="text-center text-slate-700 text-sm font-bold mb-6 uppercase tracking-widest">
         Skill Network — hover any node to explore
       </p>
 
@@ -211,8 +217,8 @@ function SkillNetwork() {
                   key={`${aId}-${bId}`}
                   x1={`${a.x}%`} y1={`${a.y}%`}
                   x2={`${b.x}%`} y2={`${b.y}%`}
-                  stroke={isHot ? 'rgba(59,130,246,0.65)' : 'rgba(148,163,184,0.1)'}
-                  strokeWidth={isHot ? '1.5' : '0.8'}
+                  stroke={isHot ? 'rgba(59,130,246,0.75)' : (isDark ? 'rgba(148,163,184,0.12)' : 'rgba(15,23,42,0.45)')}
+                  strokeWidth={isHot ? '1.5' : (isDark ? '0.8' : '1.2')}
                   style={{ transition: 'stroke 0.2s', opacity: isDim ? 0.08 : 1 }}
                 />
               )
@@ -268,13 +274,13 @@ function SkillNetwork() {
                   className="relative w-10 h-10 rounded-full flex items-center justify-center cursor-pointer select-none"
                   style={{
                     background: node.exploring
-                      ? 'rgba(15,23,42,0.85)'
+                      ? (isDark ? 'rgba(15,23,42,0.85)' : 'rgba(71,85,105,0.68)')
                       : isHov
                         ? 'rgba(59,130,246,0.28)'
                         : 'rgba(59,130,246,0.1)',
                     border: `2px solid ${
                       node.exploring
-                        ? (isHov ? 'rgba(100,116,139,0.45)' : 'rgba(51,65,85,0.25)')
+                        ? (isHov ? 'rgba(100,116,139,0.55)' : (isDark ? 'rgba(51,65,85,0.25)' : 'rgba(100,116,139,0.40)'))
                         : (isHov ? '#60A5FA' : 'rgba(59,130,246,0.38)')
                     }`,
                     boxShadow: node.exploring
@@ -289,7 +295,9 @@ function SkillNetwork() {
                     fontWeight: 700,
                     letterSpacing: '-0.01em',
                     color: node.exploring
-                      ? (isHov ? '#64748B' : '#1E293B')
+                      ? (isDark
+                          ? (isHov ? '#64748B' : '#334155')
+                          : '#E2E8F0')
                       : (isHov ? '#BAE6FD' : '#60A5FA'),
                   }}
                 >
