@@ -64,6 +64,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${plusJakartaSans.variable} ${inter.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
+      {/* Runs before React hydrates — sets the correct theme class instantly to prevent FOUC */}
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');var d=document.documentElement;if(t==='light'){d.classList.remove('dark');d.classList.add('light')}else{d.classList.remove('light');d.classList.add('dark')}}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body className="font-body antialiased">
         <ThemeProvider>
           <SmoothScroll>

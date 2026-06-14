@@ -2,7 +2,7 @@
 
 import { useRef, useEffect, useState, useMemo } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { useTheme } from 'next-themes'
+import { useTheme } from '@/components/providers/ThemeProvider'
 import { skillCategories } from '@/lib/data'
 import { fadeUp } from '@/lib/variants'
 
@@ -166,7 +166,7 @@ const SKILL_EDGES: [string, string][] = [
   ['docker', 'postman'], ['docker', 'ts'], ['docker', 'express'],
   ['ts', 'go'], ['anim', 'go'], ['anim', 'css3'],
   ['ts', 'figma'], ['ts', 'express'],
-  ['git', 'react'], ['git', 'go55'], ['git', 'nextjs'],
+  ['git', 'react'], ['git', 'go'], ['git', 'nextjs'],
 ]
 
 function SkillNetwork() {
