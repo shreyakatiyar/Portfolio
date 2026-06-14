@@ -220,29 +220,13 @@ export default function Hero() {
                   src="/home1.jpg"
                   alt="Shreya Katiyar"
                   width={380}
-                  height={360}
+                  height={390}
                   className="w-full object-cover object-top"
                   style={{ maxHeight: '560px' }}
                   priority
                 />
               </div>
             </div>
-
-            {/* Floating circle avatar (top-right) — larger */}
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute -top-7 -right-7 w-28 h-28 rounded-full overflow-hidden border-2 border-slate-600/50 shadow-[0_0_24px_rgba(59,130,246,0.15)]"
-              style={{ background: '#CDCBD6' }}
-            >
-              <Image
-                src="/circle.png"
-                alt="Avtar-img"
-                width={212}
-                height={212}
-                className="w-full h-full object-cover "
-              />
-            </motion.div>
           </div>
         </motion.div>
 

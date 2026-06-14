@@ -173,7 +173,8 @@ export default function About() {
             >
               <div className="relative w-full h-full overflow-hidden rounded-[23px]" style={{ minHeight: '338px' }}>
                 <Image
-                  src="/home1.jpg"
+                  src="/abt.png"
+    
                   alt="Shreya Katiyar"
                   fill
                   sizes="(max-width: 768px) 100vw, 40vw"
