@@ -13,7 +13,7 @@ const socials = [
   { icon: GitHubIcon, href: "https://github.com/shreyakatiyar", label: 'GitHub' },
   { icon: LinkedInIcon, href: "https://www.linkedin.com/in/shreyakatiyar/", label: 'LinkedIn' },
   // { icon: XTwitterIcon, href: personalInfo.twitter, label: 'Twitter' },
-  { icon: Mail, href:"mailto:shreyakatiyar76@gmail.com", label: 'Email' },
+  { icon: Mail, href: 'mailto:shreyakatiyar76@gmail.com', label: 'Email' },
 ]
 
 
@@ -172,10 +172,9 @@ export default function Hero() {
               <ArrowRight className="w-4 h-4" />
             </Link>
             <a
-              href="/shreya_online_1.pdf"
+              href="/shreya.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              download
               className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-100 rounded-xl px-6 py-3 font-semibold transition-colors duration-300 border border-slate-600/40"
             >
               <Download className="w-4 h-4" />
@@ -189,8 +188,10 @@ export default function Hero() {
               <motion.a
                 key={label}
                 href={href}
-                target="_blank"
-                rel="noopener noreferrer"
+                {...(label !== 'Email' && {
+    target: '_blank',
+    rel: 'noopener noreferrer',
+  })}
                 whileHover={{ scale: 1.08 }}
                 whileTap={{ scale: 0.95 }}
                 className="p-3 rounded-xl border border-slate-600/30 hover:border-slate-600/60 text-slate-50/70 hover:text-slate-50 transition-all duration-200 hover:bg-slate-700/20"
