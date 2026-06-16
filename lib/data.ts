@@ -128,9 +128,9 @@ export const projects = [
   {
     id: 5,
     title: 'Stellar Precision',
-    subtitle: 'Data Visualization',
-    description: 'Interactive analytics dashboard with animated data visualizations, real-time data streaming, and a premium dark UI.',
-    tech: ['React.js', 'TypeScript', 'JavaScript', 'CSS3', 'REST APIs'],
+    subtitle:'Scientific Instruments Showcase',
+    description: 'A modern product showcase platform for scientific instruments featuring elegant UI, interactive visual elements, and a high-end user experience built with React and TypeScript.',
+   tech: ['React.js', 'TypeScript', 'JavaScript', 'CSS3', 'REST APIs'],
     github: 'https://github.com/shreyakatiyar/Stellar-Precision',
     live: 'https://stellar-precision-rho.vercel.app',
     featured: true,
@@ -142,8 +142,8 @@ export const projects = [
   {
     id: 6,
     title: 'After You',
-    subtitle: 'Creative CSS Project',
-    description: 'A creative web experience showcasing advanced CSS animations, transitions, and modern design techniques with pure CSS.',
+    subtitle:'Women Wellness & Support Platform',
+   description: 'A comprehensive wellness platform designed to empower women through self-care services, community storytelling, mental well-being resources, and interactive digital experiences.',
     tech: ['HTML5', 'CSS3', 'JavaScript', 'Animations'],
     github: 'https://github.com/shreyakatiyar/After-you',
     live: 'https://after-you-wheat.vercel.app',

@@ -119,6 +119,9 @@ export default function Skills() {
         {/* ── Skill Network ── */}
         <SkillNetwork />
       </div>
+
+      {/* ── Continuous tech ticker — full viewport width ── */}
+      <TechMarquee />
     </section>
   )
 }
@@ -340,6 +343,61 @@ function SkillNetwork() {
         </div>
       </div>
     </motion.div>
+  )
+}
+
+/* ── Continuous scrolling tech ticker ──────────────────────── */
+const TECH_ITEMS = [
+  { name: 'React.js',        dot: '#61DAFB' },
+  { name: 'Next.js',         dot: '#FFFFFF' },
+  { name: 'JavaScript',      dot: '#F7DF1E' },
+  { name: 'TypeScript',      dot: '#3178C6' },
+  { name: 'HTML5',           dot: '#E34F26' },
+  { name: 'CSS3',            dot: '#1572B6' },
+  { name: 'Tailwind CSS',    dot: '#06B6D4' },
+  { name: 'Framer Motion',   dot: '#BB4FFF' },
+  { name: 'Redux',           dot: '#764ABC' },
+  { name: 'Bootstrap',       dot: '#7952B3' },
+  { name: 'REST APIs',       dot: '#3B82F6' },
+  { name: 'Git & GitHub',    dot: '#F05032' },
+  { name: 'Docker',          dot: '#2496ED' },
+  { name: 'Figma',           dot: '#F24E1E' },
+  { name: 'Postman',         dot: '#FF6C37' },
+  { name: 'Microservices',   dot: '#10B981' },
+]
+
+function TechMarquee() {
+  const items = [...TECH_ITEMS, ...TECH_ITEMS] // duplicate for seamless loop
+
+  return (
+    <div className="relative mt-14 w-full overflow-hidden py-5 border-y border-slate-700/25">
+      {/* Left fade */}
+      <div
+        className="absolute left-0 top-0 bottom-0 w-28 z-10 pointer-events-none"
+        style={{ background: 'linear-gradient(to right, #0F172A 10%, transparent)' }}
+      />
+      {/* Right fade */}
+      <div
+        className="absolute right-0 top-0 bottom-0 w-28 z-10 pointer-events-none"
+        style={{ background: 'linear-gradient(to left, #0F172A 10%, transparent)' }}
+      />
+
+      {/* Scrolling track — two copies so the loop is invisible */}
+      <div className="marquee-track flex whitespace-nowrap">
+        {items.map((item, i) => (
+          <span
+            key={i}
+            className="inline-flex items-center gap-2.5 mx-7 text-slate-400 text-sm font-medium tracking-wide select-none"
+          >
+            <span
+              className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+              style={{ background: item.dot, boxShadow: `0 0 6px ${item.dot}80` }}
+            />
+            {item.name}
+          </span>
+        ))}
+      </div>
+    </div>
   )
 }
 
