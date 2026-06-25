@@ -10,7 +10,7 @@ import { fadeUp } from '@/lib/variants'
 const socials = [
   { icon: GitHubIcon,   href: 'https://github.com/shreya-katiyar',          label: 'GitHub',    handle: '@shreya-katiyar' },
   { icon: LinkedInIcon, href: 'https://www.linkedin.com/in/shreyakatiyar/',  label: 'LinkedIn',  handle: 'Shreya Katiyar' },
-  { icon: InstagramIcon,href: 'https://www.instagram.com/shreyakatiyar',     label: 'Instagram', handle: '@shreyakatiyar' },
+  { icon: InstagramIcon,href: 'https://www.instagram.com/yrrrr_shreya/',     label: 'Instagram', handle: 'yrrrr_shreya' },
   { icon: Mail,         href: 'mailto:shreyakatiyar76@gmail.com',            label: 'Email',     handle: 'shreyakatiyar76@gmail.com' },
 ]
 

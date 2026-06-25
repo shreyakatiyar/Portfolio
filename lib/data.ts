@@ -8,7 +8,7 @@ export const personalInfo = {
   email: 'shreyakatiyar76@gmail.com',
   github: 'https://github.com/shreya-katiyar',
   linkedin: 'https://linkedin.com/in/shreya-katiyar',
-  instagram: 'https://www.instagram.com/shreyakatiyar',
+  instagram: 'https://www.instagram.com/yrrrr_shreya/',
   location: 'India',
   available: true,
 }
