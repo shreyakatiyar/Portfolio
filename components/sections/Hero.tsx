@@ -218,7 +218,7 @@ export default function Hero() {
             <div className="img-animated-border rounded-3xl p-[1px] shadow-[0_8px_40px_rgba(0,0,0,0.3)]">
               <div className="relative bg-slate-800/50 backdrop-blur-xl rounded-[23px] overflow-hidden">
                 <Image
-                  src="/home1.jpg"
+                  src="/h1.png"
                   alt="Shreya Katiyar"
                   width={380}
                   height={390}
