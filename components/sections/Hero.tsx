@@ -75,7 +75,7 @@ export default function Hero() {
           {/* ── Full-bleed B&W photo ── */}
           <div className="absolute inset-0">
             <Image
-              src="/image.png"
+              src="/image1.png"
               alt="Shreya Katiyar"
               fill priority sizes="100vw"
               className="object-cover object-center"
