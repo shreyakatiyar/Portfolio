@@ -10,16 +10,17 @@ export default function Badge({ children, variant = 'default', className }: Badg
   return (
     <span
       className={cn(
-        'inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium',
+        'inline-flex items-center px-2.5 py-0.5 text-xs font-mono tracking-[0.1em]',
         {
-          'bg-slate-700/50 text-slate-200 border border-slate-600/30': variant === 'default',
-          'bg-blue-500/10 text-blue-400 border border-blue-500/25': variant === 'indigo',
-          'bg-slate-600/30 text-slate-300 border border-slate-600/30': variant === 'violet',
-          'bg-slate-700/40 text-slate-300 border border-slate-600/25': variant === 'cyan',
-          'bg-transparent text-slate-400 border border-slate-600/30 hover:border-slate-500/50 transition-colors': variant === 'outline',
+          'text-white/55 border border-white/[0.08]': variant === 'default',
+          'text-white/55 border border-white/[0.08]': variant === 'indigo',
+          'text-white/50 border border-white/[0.07]': variant === 'violet',
+          'text-white/50 border border-white/[0.07]': variant === 'cyan',
+          'text-white/40 border border-white/[0.06] hover:border-white/[0.12] transition-colors': variant === 'outline',
         },
         className
       )}
+      style={{ background: 'rgba(255,255,255,0.04)', borderRadius: '2px' }}
     >
       {children}
     </span>

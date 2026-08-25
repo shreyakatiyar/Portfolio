@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
-import { Plus_Jakarta_Sans, Inter, JetBrains_Mono } from 'next/font/google'
+import { Plus_Jakarta_Sans, Inter, JetBrains_Mono, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import CustomCursor from '@/components/ui/CustomCursor'
 import SmoothScroll from '@/components/ui/SmoothScroll'
 import ScrollProgress from '@/components/ui/ScrollProgress'
-import ThemeToggle from '@/components/ui/ThemeToggle'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -25,6 +24,13 @@ const jetbrainsMono = JetBrains_Mono({
   variable: '--font-mono',
   display: 'swap',
   weight: ['400', '500', '600'],
+})
+
+const playfairDisplay = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-display',
+  display: 'swap',
+  weight: ['700', '800', '900'],
 })
 
 export const metadata: Metadata = {
@@ -61,7 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${plusJakartaSans.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+      className={`${plusJakartaSans.variable} ${inter.variable} ${jetbrainsMono.variable} ${playfairDisplay.variable}`}
       suppressHydrationWarning
     >
       {/* Runs before React hydrates — sets the correct theme class instantly to prevent FOUC */}
@@ -78,7 +84,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <CustomCursor />
             <ScrollProgress />
             {children}
-            <ThemeToggle />
           </SmoothScroll>
         </ThemeProvider>
       </body>

@@ -15,36 +15,81 @@ export default function Projects() {
   const [isPaused, setIsPaused] = useState(false)
 
   return (
-    <section id="projects" className="section-padding relative overflow-hidden">
-      <div className="absolute left-1/3 top-0 w-[600px] h-[600px] orb orb-indigo opacity-10 pointer-events-none" />
+    <section id="projects" className="section-padding relative overflow-hidden" style={{ background: '#070b12' }}>
+      {/* Film grain — editorial consistency */}
+      <div
+        aria-hidden
+        className="absolute inset-0 z-[1] pointer-events-none opacity-[0.025]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")`,
+          backgroundRepeat: 'repeat',
+          backgroundSize: '160px 160px',
+        }}
+      />
 
       {/* Section header */}
       <div ref={ref} className="container-width mb-16">
         <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="flex items-center gap-3 mb-4"
+          initial={{ opacity: 0, y: 10 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+          className="flex items-center gap-4 mb-16"
         >
-          <span className="text-slate-50 text-sm font-mono">03.</span>
-          <span className="text-slate-50/60 text-sm tracking-widest uppercase">Projects</span>
-          <div className="flex-1 h-px bg-slate-700/60" />
+          <span className="font-mono text-[10px] tracking-[0.45em]" style={{ color: 'rgba(255,255,255,0.22)' }}>03 / PROJECTS</span>
+          <div className="flex-1 h-px bg-white/[0.06]" />
         </motion.div>
 
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Things I&apos;ve{' '}
-            <span className="gradient-text-accent">built</span>
-          </h2>
-          <p className="text-slate-400 max-w-xl text-base">
-            Six projects across fitness, AI, education, and design.
-            Hover any card to explore — click to visit on deployed screen.
-          </p>
-        </motion.div>
+        {/* Heading block */}
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+
+          {/* Left: mask-reveal title */}
+          <div className="select-none">
+            <div className="overflow-hidden">
+              <motion.h2
+                initial={{ y: '102%' }}
+                animate={isInView ? { y: 0 } : { y: '102%' }}
+                transition={{ duration: 0.85, delay: 0.08, ease: [0.76, 0, 0.24, 1] }}
+                className="font-black uppercase tracking-tight text-white"
+                style={{ fontSize: 'clamp(2.6rem, 5vw, 5.5rem)', lineHeight: 0.86 }}
+              >Things I&apos;ve</motion.h2>
+            </div>
+            <div className="overflow-hidden">
+              <motion.h2
+                initial={{ y: '102%' }}
+                animate={isInView ? { y: 0 } : { y: '102%' }}
+                transition={{ duration: 0.85, delay: 0.16, ease: [0.76, 0, 0.24, 1] }}
+                className="font-black uppercase tracking-tight"
+                style={{
+                  fontSize: 'clamp(2.6rem, 5vw, 5.5rem)', lineHeight: 0.86,
+                  color: 'transparent',
+                  WebkitTextStroke: '1.5px rgba(255,255,255,0.17)',
+                }}
+              >Built</motion.h2>
+            </div>
+          </div>
+
+          {/* Right: descriptor block */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.55, delay: 0.32 }}
+            className="lg:max-w-[320px] flex flex-col gap-4 lg:pb-1"
+          >
+            <div className="h-px" style={{ background: 'rgba(255,255,255,0.06)' }} />
+            <p className="text-sm leading-[1.9]" style={{ color: 'rgba(255,255,255,0.35)' }}>
+              Six projects across fitness, AI, education, and design.
+              Hover any card to explore — click to visit the live deployment.
+            </p>
+            <div className="flex items-center gap-3">
+              <span className="text-[10px] font-mono tracking-[0.35em]"
+                style={{ color: 'rgba(255,255,255,0.18)' }}>6 PROJECTS</span>
+              <span className="w-1 h-1 rounded-full" style={{ background: 'rgba(255,255,255,0.15)' }} />
+              <span className="text-[10px] font-mono tracking-[0.35em]"
+                style={{ color: 'rgba(255,255,255,0.18)' }}>DEPLOYED</span>
+            </div>
+          </motion.div>
+
+        </div>
       </div>
 
       {/* ── Infinite marquee strip ── */}
@@ -59,11 +104,11 @@ export default function Projects() {
         {/* Edge fade masks */}
         <div
           className="absolute left-0 top-0 bottom-0 w-32 md:w-48 z-10 pointer-events-none"
-          style={{ background: 'linear-gradient(to right, #0F172A 0%, transparent 100%)' }}
+          style={{ background: 'linear-gradient(to right, #070b12 0%, transparent 100%)' }}
         />
         <div
           className="absolute right-0 top-0 bottom-0 w-32 md:w-48 z-10 pointer-events-none"
-          style={{ background: 'linear-gradient(to left, #0F172A 0%, transparent 100%)' }}
+          style={{ background: 'linear-gradient(to left, #070b12 0%, transparent 100%)' }}
         />
 
         {/* Moving track — two identical sets for seamless loop */}
@@ -89,7 +134,8 @@ export default function Projects() {
         initial={{ opacity: 0 }}
         animate={isInView ? { opacity: 1 } : {}}
         transition={{ delay: 0.9 }}
-        className="text-center text-slate-600 text-xs mt-4 tracking-widest uppercase"
+        className="text-center text-xs mt-4 tracking-widest uppercase font-mono"
+        style={{ color: 'rgba(255,255,255,0.18)' }}
       >
         hover to preview · click to open
       </motion.p>
@@ -112,7 +158,7 @@ function ProjectCard({ project }: { project: Project }) {
 
   return (
     <motion.div
-      className="relative flex-shrink-0 w-[260px] h-[260px] overflow-hidden cursor-pointer select-none"
+      className="relative flex-shrink-0 w-[340px] h-[340px] overflow-hidden cursor-pointer select-none"
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
       onClick={handleClick}
@@ -125,7 +171,7 @@ function ProjectCard({ project }: { project: Project }) {
       }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       style={{
-        background: `linear-gradient(145deg, ${project.accentColor}18 0%, #1E293B 55%, #0F172A 100%)`,
+        background: `linear-gradient(145deg, ${project.accentColor}14 0%, #0d1420 55%, #070b12 100%)`,
         border: `1px solid ${project.accentColor}22`,
       }}
     >
@@ -140,8 +186,8 @@ function ProjectCard({ project }: { project: Project }) {
         <span className="text-5xl relative z-10">{project.icon}</span>
 
         <div className="text-center relative z-10">
-          <p className="text-slate-50 font-bold text-lg leading-tight">{project.title}</p>
-          <p className="text-slate-400 text-xs mt-1 tracking-widest uppercase font-medium">
+          <p className="text-white font-bold text-lg leading-tight">{project.title}</p>
+          <p className="text-xs mt-1 tracking-widest uppercase font-mono" style={{ color: 'rgba(255,255,255,0.35)' }}>
             {project.subtitle}
           </p>
         </div>
@@ -172,14 +218,14 @@ function ProjectCard({ project }: { project: Project }) {
         transition={{ duration: 0.35 }}
         className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-7"
         style={{
-          background: `linear-gradient(145deg, ${project.accentColor}28 0%, rgba(15,23,42,0.97) 100%)`,
+          background: `linear-gradient(145deg, ${project.accentColor}20 0%, rgba(7,11,18,0.97) 100%)`,
         }}
       >
         <p className="font-bold text-sm text-center leading-snug" style={{ color: project.accentColor }}>
           {project.title}
         </p>
 
-        <p className="text-slate-300 text-xs text-center leading-relaxed line-clamp-3">
+        <p className="text-xs text-center leading-relaxed line-clamp-3" style={{ color: 'rgba(255,255,255,0.55)' }}>
           {project.description}
         </p>
 
@@ -187,8 +233,8 @@ function ProjectCard({ project }: { project: Project }) {
           {project.tech.slice(0, 3).map((t) => (
             <span
               key={t}
-              className="text-[9px] px-2 py-0.5 rounded-full border border-white/10 text-slate-400"
-              style={{ background: 'rgba(255,255,255,0.05)' }}
+              className="text-[9px] px-2 py-0.5 border border-white/10"
+              style={{ color: 'rgba(255,255,255,0.38)', borderRadius: '2px', background: 'rgba(255,255,255,0.05)' }}
             >
               {t}
             </span>
@@ -200,8 +246,8 @@ function ProjectCard({ project }: { project: Project }) {
             onClick={handleGitHub}
             whileHover={{ scale: 1.15 }}
             whileTap={{ scale: 0.92 }}
-            className="p-2 rounded-full border border-white/15 text-slate-300 hover:text-white transition-colors cursor-pointer"
-            style={{ background: 'rgba(255,255,255,0.08)' }}
+            className="p-2 border border-white/15 transition-colors cursor-pointer"
+            style={{ color: 'rgba(255,255,255,0.55)', borderRadius: '2px', background: 'rgba(255,255,255,0.07)' }}
           >
             <GitHubIcon className="w-4 h-4" />
           </motion.div>

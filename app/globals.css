@@ -2,12 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Dark theme — Vercel / Linear / Stripe inspired
-   #0F172A  Background  (slate-950)
-   #1E293B  Surface     (slate-800)
-   #3B82F6  Accent      (blue-500)
-   #F8FAFC  Text        (slate-50)
-   #94A3B8  Muted       (slate-400)
+/* Editorial dark theme — matched to Hero section
+   #070b12  Background  (near-black)
+   #0d1420  Surface     (dark card)
+   #ffffff  Text        (white at opacity)
+   #ffffff  Accent      (white only, opacity-based)
 */
 
 @layer base {
@@ -28,7 +27,7 @@
   }
 
   body {
-    background: #0F172A;
+    background: #070b12;
     color: #F8FAFC;
     overflow-x: hidden;
     width: 100%;
@@ -46,68 +45,53 @@
   }
 
   ::selection {
-    background-color: rgba(59, 130, 246, 0.3);
+    background-color: rgba(255, 255, 255, 0.15);
     color: #F8FAFC;
   }
 
-  ::-webkit-scrollbar { width: 5px; }
-  ::-webkit-scrollbar-track { background: #0F172A; }
-  ::-webkit-scrollbar-thumb { background: #3B82F6; border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: #60A5FA; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: #070b12; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.28); }
 }
 
 @layer utilities {
   .grid-bg {
     background-image:
-      linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
     background-size: 64px 64px;
   }
 
-  .orb-indigo {
-    background: radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, transparent 70%);
-  }
-
-  .orb-violet {
-    background: radial-gradient(circle, rgba(96, 165, 250, 0.20) 0%, transparent 70%);
-  }
-
-  .orb-cyan {
-    background: radial-gradient(circle, rgba(148, 163, 184, 0.08) 0%, transparent 70%);
-  }
+  /* Orbs neutralized — editorial palette uses no color blobs */
+  .orb-indigo { background: transparent; }
+  .orb-violet { background: transparent; }
+  .orb-cyan   { background: transparent; }
 
   .gradient-text {
-    background: linear-gradient(135deg, #F8FAFC 0%, #CBD5E1 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #F8FAFC;
+    -webkit-text-fill-color: #F8FAFC;
   }
 
+  /* gradient-text-accent → plain white; no blue gradient in editorial theme */
   .gradient-text-accent {
-    background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 50%, #93C5FD 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: rgba(255,255,255,0.9);
+    -webkit-text-fill-color: rgba(255,255,255,0.9);
   }
 
   .gradient-text-dark {
-    background: linear-gradient(135deg, #F8FAFC 0%, #94A3B8 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: rgba(255,255,255,0.65);
+    -webkit-text-fill-color: rgba(255,255,255,0.65);
   }
 
   .glass {
-    background: rgba(30, 41, 59, 0.75);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(148, 163, 184, 0.12);
+    background: rgba(13, 20, 32, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.07);
   }
 
   .glass-hover:hover {
-    border-color: rgba(59, 130, 246, 0.35);
-    background: rgba(30, 41, 59, 0.92);
-    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);
+    border-color: rgba(255, 255, 255, 0.14);
+    background: rgba(13, 20, 32, 0.95);
   }
 
   .noise::after {
@@ -120,16 +104,10 @@
   }
 
   .section-padding {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
+    padding-top: clamp(3rem, 6vw, 5rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-  }
-  @media (min-width: 768px) {
-    .section-padding {
-      padding-top: 4rem;
-      padding-bottom: 4rem;
-    }
   }
   .container-width {
     max-width: 72rem;
@@ -150,7 +128,7 @@
     inset: -1px;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.6), rgba(96, 165, 250, 0.3), transparent);
+    background: linear-gradient(135deg, rgba(255,255,255,0.22), rgba(255,255,255,0.08), transparent);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -183,56 +161,56 @@
   to { --border-angle: 360deg; }
 }
 
-/* Input fields — always spinning, speeds up on focus */
+/* Input fields — white-only spinning border (editorial palette) */
 .input-animated-wrap {
   background: conic-gradient(
     from var(--border-angle),
-    rgba(59, 130, 246, 0.7),
-    rgba(139, 92, 246, 0.4),
-    rgba(6, 182, 212, 0.55),
-    rgba(59, 130, 246, 0.7)
-  );
-  animation: spin-border 3s linear infinite;
-}
-
-/* Buttons — vivid spinning border */
-.btn-animated-border {
-  background: conic-gradient(
-    from var(--border-angle),
-    rgba(59, 130, 246, 0.9),
-    rgba(139, 92, 246, 0.55),
-    rgba(6, 182, 212, 0.75),
-    rgba(59, 130, 246, 0.9)
-  );
-  animation: spin-border 2.5s linear infinite;
-}
-
-/* Image borders — slower, more subtle */
-.img-animated-border {
-  background: conic-gradient(
-    from var(--border-angle),
-    rgba(59, 130, 246, 0.55),
-    rgba(139, 92, 246, 0.25),
-    rgba(6, 182, 212, 0.45),
-    rgba(59, 130, 246, 0.55)
+    rgba(255,255,255,0.18),
+    rgba(255,255,255,0.06),
+    rgba(255,255,255,0.22),
+    rgba(255,255,255,0.18)
   );
   animation: spin-border 4s linear infinite;
 }
 
-/* Social cards — single shooting-star beam travelling around a dim border */
+/* Buttons — crisp white spinning border */
+.btn-animated-border {
+  background: conic-gradient(
+    from var(--border-angle),
+    rgba(255,255,255,0.30),
+    rgba(255,255,255,0.08),
+    rgba(255,255,255,0.35),
+    rgba(255,255,255,0.30)
+  );
+  animation: spin-border 3s linear infinite;
+}
+
+/* Image borders — subtle white */
+.img-animated-border {
+  background: conic-gradient(
+    from var(--border-angle),
+    rgba(255,255,255,0.14),
+    rgba(255,255,255,0.04),
+    rgba(255,255,255,0.18),
+    rgba(255,255,255,0.14)
+  );
+  animation: spin-border 5s linear infinite;
+}
+
+/* Social cards — white shooting-star beam */
 .shooting-star-border {
   padding: 1px;
   transition: padding 0.25s ease;
   background: conic-gradient(
     from var(--border-angle),
-    rgba(71, 85, 105, 0.25) 0%,
-    rgba(71, 85, 105, 0.25) 72%,
-    rgba(99, 102, 241, 0.25) 79%,
-    rgba(59, 130, 246, 1.0)  85%,
-    rgba(6, 182, 212, 0.75)  89%,
-    rgba(139, 92, 246, 0.3)  93%,
-    rgba(71, 85, 105, 0.25)  96%,
-    rgba(71, 85, 105, 0.25) 100%
+    rgba(255,255,255,0.07) 0%,
+    rgba(255,255,255,0.07) 72%,
+    rgba(255,255,255,0.18) 79%,
+    rgba(255,255,255,0.75) 85%,
+    rgba(255,255,255,0.50) 89%,
+    rgba(255,255,255,0.15) 93%,
+    rgba(255,255,255,0.07) 96%,
+    rgba(255,255,255,0.07) 100%
   );
   animation: spin-border 2.5s linear infinite;
 }

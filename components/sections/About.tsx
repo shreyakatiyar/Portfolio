@@ -3,228 +3,295 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
-import { MapPin, ArrowUpRight } from 'lucide-react'
-import { fadeUp } from '@/lib/variants'
+import { ArrowUpRight } from 'lucide-react'
 
-const stack = ['React.js', 'Next.js','Javascript',  'Tailwind CSS','TypeScript', 'Framer Motion']
+const ease: [number, number, number, number] = [0.76, 0, 0.24, 1]
 
-const bentoStats = [
-  { value: '1+', label: 'Yrs Experience', accent: '#3B82F6' },
-  { value: '5+', label: 'Projects Shipped', accent: '#8B5CF6' },
-  { value: '10+', label: 'Technologies', accent: '#06B6D4' },
-  { value: '100%', label: 'Passion for UI', accent: '#10B981' },
+const stack = [
+  'React.js', 'Next.js', 'TypeScript', 'Tailwind CSS',
+  'Framer Motion', 'JavaScript', 'HTML / CSS', 'Git',
 ]
 
-const personality = [
-  { emoji: '🎨', text: 'Design-minded' },
-  { emoji: '⚡', text: 'Performance-first' },
-  { emoji: '🔄', text: 'Always Learning' },
-  { emoji: '☕', text: 'Coffee-fueled' },
+const stats = [
+  { value: '1+',  label: 'YEARS\nEXPERIENCE'  },
+  { value: '15+', label: 'PROJECTS\nDELIVERED'  },
+  { value: '10+', label: 'TECH\nMASTERED'        },
+  { value: '5★',  label: 'CLIENT\nSATISFACTION' },
 ]
+
+const GRAIN = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")`
 
 export default function About() {
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px' })
+  const ref    = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section id="about" className="section-padding relative overflow-hidden">
-      <div className="absolute -right-20 top-1/4 w-[500px] h-[500px] orb orb-indigo opacity-15 pointer-events-none" />
+    <section
+      id="about"
+      ref={ref}
+      className="section-padding relative overflow-hidden"
+      style={{ background: '#070b12' }}
+    >
+      {/* Film grain */}
+      <div
+        aria-hidden
+        className="absolute inset-0 z-10 pointer-events-none opacity-[0.025]"
+        style={{ backgroundImage: GRAIN, backgroundRepeat: 'repeat', backgroundSize: '160px 160px' }}
+      />
 
-      <div ref={ref} className="container-width">
-        {/* Section label */}
+      <div className="container-width">
+        {/* ── Section label ── */}
         <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="flex items-center gap-3 mb-10"
+          initial={{ opacity: 0, y: 10 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+          className="flex items-center gap-4 mb-16"
         >
-          <span className="text-slate-50 text-sm font-mono">01.</span>
-          <span className="text-slate-50/60 text-sm tracking-widest uppercase">About Me</span>
-          <div className="flex-1 h-px bg-slate-700/60" />
+          <span className="text-[10px] font-mono tracking-[0.45em]"
+            style={{ color: 'rgba(255,255,255,0.22)' }}>02 / ABOUT</span>
+          <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.06)' }} />
         </motion.div>
 
-        {/* ── BENTO GRID ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        {/* ── Main 2-col grid ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-14 lg:gap-24 items-start">
 
-          {/* Left column (7 cols) */}
-          <div className="lg:col-span-7 flex flex-col gap-4">
+          {/* ══ LEFT — Content ══ */}
+          <div className="flex flex-col gap-10">
 
-            {/* Card 1: Main intro */}
+            {/* Heading */}
+            <div className="select-none">
+              <div className="overflow-hidden">
+                <motion.p
+                  initial={{ y: '102%' }}
+                  animate={isInView ? { y: 0 } : { y: '102%' }}
+                  transition={{ duration: 0.85, delay: 0.1, ease }}
+                  className="font-black uppercase tracking-tight text-white"
+                  style={{ fontSize: 'clamp(3rem, 5.5vw, 6.2rem)', lineHeight: 0.84 }}
+                >Crafting</motion.p>
+              </div>
+              <div className="overflow-hidden">
+                <motion.p
+                  initial={{ y: '102%' }}
+                  animate={isInView ? { y: 0 } : { y: '102%' }}
+                  transition={{ duration: 0.85, delay: 0.19, ease }}
+                  className="font-black uppercase tracking-tight"
+                  style={{
+                    fontSize: 'clamp(3rem, 5.5vw, 6.2rem)', lineHeight: 0.84,
+                    color: 'transparent',
+                    WebkitTextStroke: '1.5px rgba(255,255,255,0.17)',
+                  }}
+                >Experiences</motion.p>
+              </div>
+              <div className="overflow-hidden mt-3">
+                <motion.p
+                  initial={{ y: '102%' }}
+                  animate={isInView ? { y: 0 } : { y: '102%' }}
+                  transition={{ duration: 0.6, delay: 0.28, ease }}
+                  className="text-[10px] font-mono tracking-[0.45em] uppercase"
+                  style={{ color: 'rgba(255,255,255,0.2)' }}
+                >One pixel at a time</motion.p>
+              </div>
+            </div>
+
+            {/* Bio */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.35 }}
+              className="space-y-4"
+              style={{ maxWidth: '500px' }}
+            >
+              <p className="text-sm leading-[1.95]" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                I&apos;m a{' '}
+                <span style={{ color: 'rgba(255,255,255,0.8)' }} className="font-semibold">
+                  Frontend Developer
+                </span>{' '}
+                who cares deeply about the craft — not just making things work,
+                but making them feel{' '}
+                <em style={{ color: 'rgba(255,255,255,0.6)', fontStyle: 'italic' }}>right</em>.
+                I specialize in React &amp; Next.js, with a designer&apos;s eye for every pixel.
+              </p>
+              <p className="text-sm leading-[1.95]" style={{ color: 'rgba(255,255,255,0.26)' }}>
+                Currently shipping healthcare e-commerce at{' '}
+                <a
+                  href="https://www.linkedin.com/company/medicloudglobal/?originalSubdomain=in"
+                  target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-0.5 transition-opacity hover:opacity-70"
+                  style={{ color: 'rgba(147,197,253,0.6)' }}
+                >
+                  MediCloud Global <ArrowUpRight className="w-3 h-3" />
+                </a>.
+                Fast load times, clean code, interfaces that feel inevitable.
+              </p>
+            </motion.div>
+
+            {/* Divider */}
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={isInView ? { scaleX: 1 } : {}}
+              transition={{ duration: 0.7, delay: 0.44, ease }}
+              className="h-px"
+              style={{ background: 'rgba(255,255,255,0.06)', transformOrigin: 'left' }}
+            />
+
+            {/* Stack — badge pills */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.5 }}
+            >
+              <span
+                className="block mb-4 text-[10px] font-mono tracking-[0.4em] select-none"
+                style={{ color: 'rgba(255,255,255,0.18)' }}
+              >STACK</span>
+              <div className="flex flex-wrap gap-2">
+                {stack.map((tech, i) => (
+                  <motion.span
+                    key={tech}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ delay: 0.56 + i * 0.055 }}
+                    className="px-3 py-1.5 text-[11px] font-mono tracking-[0.12em]"
+                    style={{
+                      color: 'rgba(255,255,255,0.45)',
+                      background: 'rgba(255,255,255,0.04)',
+                      border: '1px solid rgba(255,255,255,0.08)',
+                      borderRadius: '2px',
+                    }}
+                  >{tech}</motion.span>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Divider */}
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={isInView ? { scaleX: 1 } : {}}
+              transition={{ duration: 0.7, delay: 0.7, ease }}
+              className="h-px"
+              style={{ background: 'rgba(255,255,255,0.06)', transformOrigin: 'left' }}
+            />
+
+            {/* Availability + education */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.5, delay: 0.76 }}
+              className="flex flex-wrap items-center gap-6 select-none"
+            >
+              <div className="flex items-center gap-2">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="animate-ping absolute h-full w-full rounded-full bg-emerald-400 opacity-60" />
+                  <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                </span>
+                <span className="text-[10px] font-mono tracking-[0.3em]"
+                  style={{ color: 'rgba(255,255,255,0.32)' }}>AVAILABLE FOR WORK</span>
+              </div>
+              <span className="h-3 w-px" style={{ background: 'rgba(255,255,255,0.1)' }} />
+              <span className="text-[10px] font-mono tracking-[0.3em]"
+                style={{ color: 'rgba(255,255,255,0.18)' }}>B.TECH · COMPUTER SCIENCE</span>
+            </motion.div>
+
+          </div>
+
+          {/* ══ RIGHT — Photo (sticky on desktop) ══ */}
+          <div className="lg:sticky lg:top-28 self-start">
             <motion.div
               initial={{ opacity: 0, y: 28 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.65, delay: 0.05 }}
-              className="relative bg-slate-800/40 backdrop-blur-xl rounded-3xl p-8 border border-slate-700/30 overflow-hidden flex-1"
+              transition={{ duration: 1.05, delay: 0.18, ease }}
+              className="relative overflow-hidden"
+              style={{
+                aspectRatio: '4/5',
+                clipPath: 'polygon(0 3%, 3% 0, 97% 0, 100% 3%, 100% 97%, 97% 100%, 3% 100%, 0 97%)',
+              }}
             >
-              {/* Top accent line */}
-              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-500/60 to-transparent" />
-              {/* Dot matrix texture */}
-              <div
-                className="absolute inset-0 opacity-[0.035] pointer-events-none"
-                style={{
-                  backgroundImage: 'radial-gradient(rgba(148,163,184,1) 1px, transparent 1px)',
-                  backgroundSize: '22px 22px',
-                }}
+              <Image
+                src="/abt.png"
+                alt="Shreya Katiyar"
+                fill
+                sizes="(max-width: 1024px) 100vw, 360px"
+                className="object-cover object-top"
+                style={{ filter: 'brightness(0.82) contrast(1.07) saturate(0.85)' }}
               />
-              <div className="relative z-10">
-                <h2 className="text-3xl md:text-4xl xl:text-[2.6rem] font-bold leading-[1.1] mb-5">
-                  Crafting{' '}
-                  <span className="gradient-text-accent">digital experiences</span>
-                  <br />that matter
-                </h2>
-                <div className="space-y-3 text-slate-400 text-[15px] leading-relaxed max-w-[520px] mb-6">
-                  <p>
-                    I&apos;m a{' '}
-                    <span className="text-slate-100 font-semibold">Frontend Developer</span>{' '}
-                    with 1+ year building production-grade web applications. I specialize in React.js
-                    and Next.js, bringing a designer&apos;s eye and engineer&apos;s precision to every project.
-                  </p>
-                  <p>
-                    I thrive at the intersection of{' '}
-                    <span className="text-slate-200 font-medium">great UX and clean code</span>{' '}
-                    — building interfaces that feel fast, intuitive, and delightful.
-                  </p>
-                </div>
-                {/* Stack chips */}
-                <div className="flex flex-wrap gap-2">
-                  {stack.map((tech, i) => (
-                    <motion.span
-                      key={tech}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                      transition={{ delay: 0.5 + i * 0.07 }}
-                      className="px-3 py-1 text-xs rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-300 font-medium"
-                    >
-                      {tech}
-                    </motion.span>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
+              {/* Bottom fade */}
+              <div
+                className="absolute inset-x-0 bottom-0 h-[38%] pointer-events-none"
+                style={{ background: 'linear-gradient(to top, #070b12 0%, transparent 100%)' }}
+              />
+              {/* Inset frame */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{ boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.05)' }}
+              />
 
-            {/* Bottom row: Currently + Stats 2×2 */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
-              {/* Card 3: Currently building */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.22 }}
-                className="relative bg-slate-800/40 backdrop-blur-xl rounded-3xl p-6 border border-slate-700/30 overflow-hidden"
-              >
-                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/40 to-transparent" />
-                <p className="text-slate-500 text-[10px] uppercase tracking-widest mb-3">Currently</p>
-                <div className="flex items-center gap-2 mb-2.5">
-                  <span className="relative flex h-2 w-2 flex-shrink-0">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-400" />
-                  </span>
-                  <span className="text-slate-100 font-semibold text-sm">Building in production</span>
-                </div>
-                <p className="text-slate-400 text-xs leading-relaxed">
-                  Frontend Dev at{' '}
-                  <a
-                    href="https://www.linkedin.com/company/medicloudglobal/?originalSubdomain=in"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-400 font-medium hover:underline inline-flex items-center gap-0.5"
-                  >
-                    MediCloud Global <ArrowUpRight className="w-2.5 h-2.5" />
-                  </a>
-                  {' '}— shipping healthcare e-commerce at scale.
-                </p>
-              </motion.div>
-
-              {/* Card 4: Stats 2×2 */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.28 }}
-                className="grid grid-cols-2 gap-3"
-              >
-                {bentoStats.map((s, i) => (
-                  <motion.div
-                    key={s.label}
-                    initial={{ opacity: 0, scale: 0.85 }}
-                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{ delay: 0.38 + i * 0.08, duration: 0.5 }}
-                    className="bg-slate-800/40 backdrop-blur-xl rounded-2xl p-4 border border-slate-700/30 text-center"
-                  >
-                    <div className="text-xl font-bold leading-none mb-1" style={{ color: s.accent }}>
-                      {s.value}
-                    </div>
-                    <div className="text-[10px] text-slate-500 leading-tight">{s.label}</div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </div>
-          </div>
-
-          {/* Right column (5 cols) */}
-          <div className="lg:col-span-5 flex flex-col gap-4">
-
-            {/* Card 2: Profile photo — animated border wrapper */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.93 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="img-animated-border rounded-3xl p-[1px] flex-1"
-              style={{ minHeight: '340px' }}
-            >
-              <div className="relative w-full h-full overflow-hidden rounded-[23px]" style={{ minHeight: '338px' }}>
-                <Image
-                  src="/abt.png"
-    
-                  alt="Shreya Katiyar"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 40vw"
-                  className="object-cover object-top"
-                />
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/10 to-transparent" />
-                {/* Blue tint */}
-                <div className="absolute inset-0 bg-blue-950/15" />
-                {/* Name + available badge */}
-                <div className="absolute bottom-5 left-5 right-5">
-                  <div className="flex items-end justify-between gap-3">
-                    <div>
- 
-                      <p className="text-slate-400 text-xs mt-0.5 flex items-center gap-1.5">
-                        <MapPin className="w-3 h-3" />
-                        India 
-                      </p>
-                    </div>
-                    {/*  */}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Card 5: Personality / vibe */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.32 }}
-              className="relative bg-slate-800/40 backdrop-blur-xl rounded-3xl p-6 border border-slate-700/30 overflow-hidden"
-            >
-              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-400/40 to-transparent" />
-              <p className="text-slate-500 text-[10px] uppercase tracking-widest mb-4">My vibe</p>
-              <div className="grid grid-cols-2 gap-y-3 gap-x-4">
-                {personality.map((p) => (
-                  <div key={p.text} className="flex items-center gap-2">
-                    <span className="text-base">{p.emoji}</span>
-                    <span className="text-slate-300 text-xs font-medium">{p.text}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-4 pt-4 border-t border-slate-700/50">
-                <p className="text-slate-500 text-xs">
-                  When I&apos;m not coding, I&apos;m exploring web animation, design systems, and frontend architecture.
-                </p>
+              {/* Overlaid label inside photo bottom-left */}
+              <div className="absolute bottom-4 left-5 z-10 select-none">
+                <p className="text-[9px] font-mono tracking-[0.4em]"
+                  style={{ color: 'rgba(255,255,255,0.35)' }}>SHREYA KATIYAR</p>
+                <p className="text-[9px] font-mono tracking-[0.35em] mt-0.5"
+                  style={{ color: 'rgba(255,255,255,0.2)' }}>INDIA · 2025</p>
               </div>
             </motion.div>
           </div>
+
         </div>
+
+        {/* ── Bottom stats bar ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.65, delay: 0.88 }}
+          className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-3"
+        >
+          {stats.map(({ value, label }, i) => (
+            <motion.div
+              key={value}
+              initial={{ opacity: 0, y: 16 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.9 + i * 0.07 }}
+              className="relative flex flex-col justify-between overflow-hidden"
+              style={{
+                padding: 'clamp(1.2rem, 3vw, 1.8rem)',
+                background: 'rgba(255,255,255,0.025)',
+                border: '1px solid rgba(255,255,255,0.055)',
+                borderRadius: '4px',
+                minHeight: '130px',
+              }}
+            >
+              {/* Faint index watermark */}
+              <span
+                className="absolute font-black pointer-events-none select-none leading-none"
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontSize: '5rem',
+                  color: 'rgba(255,255,255,0.025)',
+                  right: '-0.5rem',
+                  bottom: '-1rem',
+                  lineHeight: 1,
+                }}
+              >{String(i + 1).padStart(2, '0')}</span>
+
+              {/* Label at top */}
+              <span
+                className="font-mono text-[8px] tracking-[0.45em] uppercase"
+                style={{ color: 'rgba(255,255,255,0.22)', whiteSpace: 'pre-line', lineHeight: 1.7 }}
+              >{label}</span>
+
+              {/* Big value at bottom */}
+              <span
+                className="font-black tracking-tight leading-none"
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontSize: 'clamp(2.2rem, 3.8vw, 3.4rem)',
+                  color: '#fff',
+                  marginTop: '0.75rem',
+                }}
+              >{value}</span>
+            </motion.div>
+          ))}
+        </motion.div>
+
       </div>
     </section>
   )

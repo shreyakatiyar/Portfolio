@@ -10,7 +10,7 @@ interface GlowCardProps {
   glowColor?: string
 }
 
-export default function GlowCard({ children, className, glowColor = '#3B82F6' }: GlowCardProps) {
+export default function GlowCard({ children, className, glowColor = 'rgba(255,255,255,0.5)' }: GlowCardProps) {
   const ref = useRef<HTMLDivElement>(null)
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
@@ -39,7 +39,8 @@ export default function GlowCard({ children, className, glowColor = '#3B82F6' }:
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={cn('relative overflow-hidden bg-slate-800/50 backdrop-blur-xl glow-border rounded-2xl', className)}
+      className={cn('relative overflow-hidden glow-border', className)}
+      style={{ background: 'rgba(13,20,32,0.7)', borderRadius: '3px', border: '1px solid rgba(255,255,255,0.07)' }}
     >
       {/* Spotlight glow */}
       <motion.div

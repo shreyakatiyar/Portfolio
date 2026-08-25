@@ -67,14 +67,15 @@ export default function CustomCursor() {
       {/* Dot */}
       <motion.div
         ref={cursorRef}
-        className="fixed w-2 h-2 rounded-full bg-blue-500 -translate-x-1/2 -translate-y-1/2"
+        className="fixed w-2 h-2 rounded-full -translate-x-1/2 -translate-y-1/2"
+        style={{ background: 'rgba(255,255,255,0.85)' }}
         style={{ x: cursorX, y: cursorY }}
       />
       {/* Ring */}
       <motion.div
         ref={ringRef}
-        className="fixed w-8 h-8 rounded-full border border-blue-500/40 -translate-x-1/2 -translate-y-1/2 transition-all duration-200"
-        style={{ x: ringX, y: ringY, marginLeft: '-12px', marginTop: '-12px' }}
+        className="fixed w-8 h-8 rounded-full -translate-x-1/2 -translate-y-1/2 transition-all duration-200"
+        style={{ border: '1px solid rgba(255,255,255,0.25)', x: ringX, y: ringY, marginLeft: '-12px', marginTop: '-12px' }}
       />
     </div>
   )

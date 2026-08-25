@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils'
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
+  const [pastHero, setPastHero] = useState(false)
 
   const handleNavClick = (e: React.MouseEvent, href: string) => {
     e.preventDefault()
@@ -16,7 +17,12 @@ export default function Navbar() {
   }
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60)
+    const onScroll = () => {
+      const y = window.scrollY
+      // Hero is exactly one viewport tall — show navbar only after scrolling past it
+      setScrolled(y > 60)
+      setPastHero(y > window.innerHeight * 0.85)
+    }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -38,17 +44,18 @@ export default function Navbar() {
     <div className="fixed top-5 inset-x-0 z-50 flex justify-center pointer-events-none">
       <motion.nav
         initial={{ y: -48, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-        className="pointer-events-auto"
+        animate={{ y: pastHero ? 0 : -72, opacity: pastHero ? 1 : 0 }}
+        transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
+        style={{ pointerEvents: pastHero ? 'auto' : 'none' }}
       >
         <div
-          className={cn(
-            'relative flex items-center gap-0.5 px-1.5 py-1.5 rounded-full border transition-all duration-500',
-            scrolled
-              ? 'bg-slate-900/90 backdrop-blur-2xl border-white/10 shadow-[0_8px_40px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.05)]'
-              : 'bg-slate-900/55 backdrop-blur-xl border-white/[0.06] shadow-[0_4px_20px_rgba(0,0,0,0.25)]'
-          )}
+          className="relative flex items-center gap-0.5 px-1.5 py-1.5 border backdrop-blur-2xl transition-all duration-500"
+          style={{
+            background: scrolled ? 'rgba(7,11,18,0.92)' : 'rgba(7,11,18,0.65)',
+            borderColor: scrolled ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.06)',
+            borderRadius: '3px',
+            boxShadow: scrolled ? '0 8px 40px rgba(0,0,0,0.6)' : '0 4px 20px rgba(0,0,0,0.4)',
+          }}
         >
           {navLinks.map((link, i) => {
             const sectionId = link.href.replace('#', '')
@@ -64,28 +71,26 @@ export default function Navbar() {
                 <Link
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className="relative block px-3 py-1.5 sm:px-4 rounded-full group"
+                  className="relative block px-3 py-1.5 sm:px-4 group"
                 >
-                  <span className="absolute inset-0 rounded-full bg-white/0 group-hover:bg-white/[0.04] transition-colors duration-150 pointer-events-none" />
+                  <span className="absolute inset-0 bg-white/0 group-hover:bg-white/[0.04] transition-colors duration-150 pointer-events-none" style={{ borderRadius: '2px' }} />
 
                   {isActive && (
                     <motion.span
                       layoutId="nav-active"
-                      className="absolute inset-0 rounded-full"
+                      className="absolute inset-0"
                       style={{
-                        background: 'linear-gradient(135deg,rgba(59,130,246,0.22) 0%,rgba(96,165,250,0.13) 100%)',
-                        border: '1px solid rgba(59,130,246,0.38)',
-                        boxShadow: '0 0 18px rgba(59,130,246,0.18), inset 0 1px 0 rgba(255,255,255,0.06)',
+                        background: 'rgba(255,255,255,0.08)',
+                        border: '1px solid rgba(255,255,255,0.14)',
+                        borderRadius: '2px',
                       }}
                       transition={{ type: 'spring', bounce: 0.18, duration: 0.52 }}
                     />
                   )}
 
                   <span
-                    className={cn(
-                      'relative z-10 text-xs sm:text-sm font-medium select-none transition-colors duration-200',
-                      isActive ? 'text-white' : 'text-slate-400 group-hover:text-slate-200'
-                    )}
+                    className="relative z-10 text-[10px] font-mono tracking-[0.2em] select-none transition-colors duration-200 uppercase"
+                    style={{ color: isActive ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.38)' }}
                   >
                     {link.label}
                   </span>
@@ -93,7 +98,8 @@ export default function Navbar() {
                   {isActive && (
                     <motion.span
                       layoutId="nav-dot"
-                      className="absolute -bottom-[3px] left-1/2 -translate-x-1/2 w-[3px] h-[3px] rounded-full bg-blue-400"
+                      className="absolute -bottom-[3px] left-1/2 -translate-x-1/2 w-[3px] h-[3px] rounded-full"
+                      style={{ background: 'rgba(255,255,255,0.6)' }}
                       transition={{ type: 'spring', bounce: 0.3, duration: 0.52 }}
                     />
                   )}

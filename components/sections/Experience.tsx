@@ -1,391 +1,319 @@
 'use client'
 
 import { useRef } from 'react'
-import { motion, useInView, useScroll, useTransform } from 'framer-motion'
-import { ExternalLink, CheckCircle2, Calendar, MapPin } from 'lucide-react'
+import { motion, useInView } from 'framer-motion'
+import { ArrowUpRight } from 'lucide-react'
 import { experiences } from '@/lib/data'
-import Badge from '@/components/ui/Badge'
-import { fadeUp } from '@/lib/variants'
+
+const ease: [number, number, number, number] = [0.76, 0, 0.24, 1]
+const GRAIN = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")`
 
 type Exp = (typeof experiences)[0]
 
 export default function Experience() {
-  const ref = useRef<HTMLDivElement>(null)
+  const ref      = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-80px' })
 
-  const timelineRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: timelineRef,
-    offset: ['start 85%', 'end 15%'],
-  })
-  const lineScaleY = useTransform(scrollYProgress, [0, 1], [0, 1])
-
   return (
-    <section id="experience" className="section-padding relative overflow-hidden">
-      <div className="absolute -left-20 top-1/4 w-[500px] h-[500px] orb orb-violet opacity-15" />
-      <div className="absolute right-0 bottom-1/4 w-[350px] h-[350px] orb orb-indigo opacity-10" />
+    <section id="experience" className="section-padding relative overflow-hidden" style={{ background: '#070b12' }}>
+      {/* Film grain */}
+      <div
+        aria-hidden
+        className="absolute inset-0 z-10 pointer-events-none opacity-[0.025]"
+        style={{ backgroundImage: GRAIN, backgroundRepeat: 'repeat', backgroundSize: '160px 160px' }}
+      />
 
       <div ref={ref} className="container-width">
+
         {/* Section label */}
         <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="flex items-center gap-3 mb-4"
+          initial={{ opacity: 0, y: 10 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+          className="flex items-center gap-4 mb-16"
         >
-          <span className="text-slate-50 text-sm font-mono">02.</span>
-          <span className="text-slate-50/60 text-sm tracking-widest uppercase">Experience</span>
-          <div className="flex-1 h-px bg-slate-700/60" />
+          <span className="text-[10px] font-mono tracking-[0.45em]"
+            style={{ color: 'rgba(255,255,255,0.22)' }}>02 / EXPERIENCE</span>
+          <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.06)' }} />
         </motion.div>
 
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          className="mb-12"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Where I&apos;ve{' '}
-            <span className="gradient-text-accent">worked</span>
-          </h2>
-          <p className="text-slate-400 max-w-xl text-base">
-            My professional journey building real-world products across healthcare, library tech, and SaaS platforms.
-          </p>
-        </motion.div>
-
-        {/* ── Timeline container ── */}
-        <div ref={timelineRef} className="relative">
-
-          {/* Desktop spine — background track */}
-          <div className="absolute left-1/2 -translate-x-[0.5px] top-0 h-full w-px bg-slate-800 hidden md:block" />
-
-          {/* Desktop spine — scroll-driven fill */}
-          <motion.div
-            className="absolute left-1/2 -translate-x-[0.5px] top-0 h-full w-px hidden md:block origin-top"
-            style={{
-              scaleY: lineScaleY,
-              background: 'linear-gradient(to bottom, #3B82F6 0%, rgba(59,130,246,0.4) 60%, transparent 100%)',
-            }}
-          />
-
-          {/* Mobile spine */}
-          <div className="absolute left-4 top-0 h-full w-px bg-slate-800 md:hidden" />
-          <motion.div
-            className="absolute left-4 top-0 h-full w-px md:hidden origin-top"
-            style={{
-              scaleY: lineScaleY,
-              background: 'linear-gradient(to bottom, #3B82F6, rgba(59,130,246,0.3))',
-            }}
-          />
-
-          <div className="space-y-20 md:space-y-28">
-            {experiences.map((exp, i) => (
-              <ExperienceRow key={exp.id} exp={exp} isLeft={i % 2 === 0} />
-            ))}
+        {/* Heading */}
+        <div className="mb-20 select-none">
+          <div className="overflow-hidden">
+            <motion.h2
+              initial={{ y: '102%' }}
+              animate={isInView ? { y: 0 } : { y: '102%' }}
+              transition={{ duration: 0.85, delay: 0.08, ease }}
+              className="font-black uppercase tracking-tight text-white"
+              style={{ fontSize: 'clamp(2.6rem, 5vw, 5.5rem)', lineHeight: 0.86 }}
+            >Where I&apos;ve</motion.h2>
+          </div>
+          <div className="overflow-hidden">
+            <motion.h2
+              initial={{ y: '102%' }}
+              animate={isInView ? { y: 0 } : { y: '102%' }}
+              transition={{ duration: 0.85, delay: 0.16, ease }}
+              className="font-black uppercase tracking-tight"
+              style={{
+                fontSize: 'clamp(2.6rem, 5vw, 5.5rem)', lineHeight: 0.86,
+                color: 'transparent',
+                WebkitTextStroke: '1.5px rgba(255,255,255,0.17)',
+              }}
+            >Worked</motion.h2>
           </div>
         </div>
+
+        {/* Chronicle entries */}
+        <div style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+          {experiences.map((exp, i) => (
+            <ExperienceEntry key={exp.id} exp={exp} index={i} flipped={i % 2 === 1} />
+          ))}
+        </div>
+
       </div>
     </section>
   )
 }
 
-function ExperienceRow({
-  exp,
-  isLeft,
-}: {
-  exp: Exp
-  isLeft: boolean
-}) {
-  const rowRef = useRef<HTMLDivElement>(null)
-  const inView = useInView(rowRef, { once: true, margin: '-80px' })
+/* ─────────────────────────────────────────────────────────────── */
+
+function ExperienceEntry({ exp, index, flipped = false }: { exp: Exp; index: number; flipped?: boolean }) {
+  const ref    = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-60px' })
+  const num    = String(index + 1).padStart(2, '0')
+  const d      = 0.06 * index   // stagger base
 
   return (
-    <div ref={rowRef} className="relative">
-
-      {/* ── Mobile layout ─────────────────────────────── */}
-      <div className="md:hidden relative pl-12">
-        {/* Mobile dot */}
-        <motion.div
-          initial={{ scale: 0, opacity: 0 }}
-          animate={inView ? { scale: 1, opacity: 1 } : {}}
-          transition={{ type: 'spring', bounce: 0.6, delay: 0.05 }}
-          className="absolute left-4 top-6 -translate-x-1/2 z-10"
-        >
-          <div
-            className={`w-3.5 h-3.5 rounded-full border-2 ${
-              exp.current
-                ? 'bg-blue-500 border-blue-400 shadow-[0_0_14px_rgba(59,130,246,0.6)]'
-                : 'bg-slate-800 border-slate-600'
-            }`}
-          >
-            {exp.current && (
-              <span className="absolute inset-0 rounded-full bg-blue-400/30 animate-ping" />
-            )}
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1], delay: 0.12 }}
-        >
-          <CardContent exp={exp} inView={inView} direction="up" />
-        </motion.div>
-      </div>
-
-      {/* ── Desktop zigzag ────────────────────────────── */}
-      <div className="hidden md:grid grid-cols-[1fr_72px_1fr] items-start">
-
-        {/* ─ Left column ─ */}
-        <div className="pr-8">
-          {isLeft ? (
-            /* Card slides from the left */
-            <motion.div
-              initial={{ opacity: 0, x: -70 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-            >
-              <CardContent exp={exp} inView={inView} direction="left" />
-            </motion.div>
-          ) : (
-            /* Meta badge fades in on opposite side */
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-col items-end justify-start pt-6"
-            >
-              <MetaBadge exp={exp} align="right" />
-            </motion.div>
-          )}
-        </div>
-
-        {/* ─ Center dot ─ */}
-        <div className="flex flex-col items-center pt-7">
-          <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={inView ? { scale: 1, opacity: 1 } : {}}
-            transition={{ type: 'spring', bounce: 0.65, delay: 0.05 }}
-            className="relative z-10"
-          >
-            <div
-              className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                exp.current
-                  ? 'bg-blue-500 border-blue-300 shadow-[0_0_20px_rgba(59,130,246,0.6)]'
-                  : 'bg-slate-800 border-slate-600'
-              }`}
-            >
-              {exp.current && (
-                <span className="absolute w-9 h-9 rounded-full bg-blue-500/20 animate-ping" />
-              )}
-            </div>
-          </motion.div>
-
-          {/* Connector nub toward card */}
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={inView ? { scaleX: 1 } : {}}
-            transition={{ duration: 0.4, delay: 0.25 }}
-            className={`h-px w-8 bg-gradient-to-r mt-[22px] origin-${isLeft ? 'right' : 'left'} ${
-              isLeft
-                ? 'mr-auto from-blue-500/50 to-transparent'
-                : 'ml-auto from-transparent to-blue-500/50'
-            }`}
-          />
-        </div>
-
-        {/* ─ Right column ─ */}
-        <div className="pl-8">
-          {!isLeft ? (
-            /* Card slides from the right */
-            <motion.div
-              initial={{ opacity: 0, x: 70 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-            >
-              <CardContent exp={exp} inView={inView} direction="right" />
-            </motion.div>
-          ) : (
-            /* Meta badge fades in on opposite side */
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-col items-start justify-start pt-6"
-            >
-              <MetaBadge exp={exp} align="left" />
-            </motion.div>
-          )}
-        </div>
-      </div>
-    </div>
-  )
-}
-
-/* ── Minimal meta badge shown on the opposite side of the card ── */
-function MetaBadge({ exp, align }: { exp: Exp; align: 'left' | 'right' }) {
-  return (
-    <div className={`flex flex-col gap-3 ${align === 'right' ? 'items-end text-right' : 'items-start text-left'}`}>
-      {/* Company initial circle */}
-      <div
-        className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-black border"
-        style={{
-          background: `${exp.companyColor}12`,
-          borderColor: `${exp.companyColor}25`,
-          color: exp.companyColor,
-        }}
-      >
-        {exp.companyInitial}
-      </div>
-
-      {/* Company + duration */}
-      <div>
-        <p className="text-slate-50 font-semibold text-base">{exp.company}</p>
-        <p className="text-slate-400 text-sm font-mono mt-0.5">{exp.duration}</p>
-        <span
-          className="inline-flex items-center gap-1 mt-2 px-2.5 py-0.5 rounded-full text-xs border"
-          style={{
-            background: `${exp.companyColor}10`,
-            borderColor: `${exp.companyColor}25`,
-            color: exp.companyColor,
-          }}
-        >
-          {exp.type}
-        </span>
-      </div>
-    </div>
-  )
-}
-
-/* ── Main card ──────────────────────────────────────────────── */
-function CardContent({
-  exp,
-  inView,
-  direction,
-}: {
-  exp: Exp
-  inView: boolean
-  direction: 'left' | 'right' | 'up'
-}) {
-  const achieveX = direction === 'right' ? 15 : -15
-
-  return (
-    <motion.div
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.25 }}
-      className={`relative bg-slate-800/50 backdrop-blur-xl rounded-2xl p-6 border glow-border group ${
-        exp.current ? 'border-blue-500/20' : 'border-slate-700/30'
-      }`}
+    <div
+      ref={ref}
+      className="relative overflow-hidden"
+      style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
     >
-      {/* Top accent glow for current */}
-      {exp.current && (
-        <div
-          className="absolute inset-x-0 top-0 h-px rounded-full opacity-60"
-          style={{ background: `linear-gradient(90deg, transparent, ${exp.companyColor}, transparent)` }}
-        />
+      {/* Hover tint */}
+      <motion.div
+        initial={false}
+        whileHover={{ opacity: 1 }}
+        animate={{ opacity: 0 }}
+        transition={{ duration: 0.2 }}
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'rgba(255,255,255,0.012)' }}
+      />
+
+      {/* ══ DESKTOP — FLIPPED layout (left: number+meta / right: content) ══ */}
+      {flipped && (
+        <div className="hidden lg:grid relative z-10 py-14" style={{ gridTemplateColumns: '40% 60%', gap: '3rem' }}>
+
+          {/* LEFT: faint big number + meta info */}
+          <div className="relative flex flex-col gap-6 pt-1">
+            {/* Big faint number */}
+            <div
+              aria-hidden
+              className="absolute left-0 top-0 font-black pointer-events-none select-none"
+              style={{ fontSize: 'clamp(7rem, 16vw, 14rem)', color: 'rgba(255,255,255,0.03)', lineHeight: 1 }}
+            >{num}</div>
+
+            {/* Meta — pushed to bottom of the left col */}
+            <motion.div
+              initial={{ opacity: 0, x: -12 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.45, delay: 0.2 + d }}
+              className="relative z-10 flex flex-col gap-3 mt-auto"
+              style={{ paddingTop: 'clamp(4rem, 10vw, 7rem)' }}
+            >
+              <span className="text-sm font-mono" style={{ color: 'rgba(255,255,255,0.52)' }}>{exp.duration}</span>
+              <div className="flex items-center gap-2">
+                <span
+                  className="px-2 py-0.5 text-[10px] font-mono tracking-[0.15em]"
+                  style={{ border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.38)', borderRadius: '2px' }}
+                >{exp.type}</span>
+                <span className="text-[10px] font-mono tracking-[0.2em]" style={{ color: 'rgba(255,255,255,0.22)' }}>{exp.location}</span>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* RIGHT: all the content */}
+          <EntryContent exp={exp} inView={inView} num={num} d={d} />
+        </div>
       )}
 
-      {/* Header row */}
-      <div className="flex items-start justify-between gap-3 mb-4">
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap mb-1">
-            <motion.h3
-              initial={{ opacity: 0, y: 8 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.2 }}
-              className="text-lg font-bold text-slate-50"
-            >
-              {exp.role}
-            </motion.h3>
-            {exp.current && (
-              <motion.span
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={inView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ delay: 0.3 }}
-                className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/25 text-blue-400 text-xs font-medium"
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
-                Current
-              </motion.span>
-            )}
+      {/* ══ DESKTOP — NORMAL layout (full-width content, big number right) ══ */}
+      {!flipped && (
+        <div className="hidden lg:block relative z-10 py-14">
+          {/* Big faint number on right */}
+          <div
+            aria-hidden
+            className="absolute right-0 top-1/2 -translate-y-1/2 font-black pointer-events-none select-none"
+            style={{ fontSize: 'clamp(7rem, 18vw, 16rem)', color: 'rgba(255,255,255,0.03)', lineHeight: 1 }}
+          >{num}</div>
+
+          {/* Top row: role + company (left) / meta (right) */}
+          <div className="flex items-start justify-between gap-16 mb-8">
+            <IndexAndRole exp={exp} inView={inView} num={num} d={d} />
+            <Meta exp={exp} inView={inView} d={d} align="right" />
           </div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.25 }}
-            className="flex flex-wrap items-center gap-2 text-sm"
-          >
-            {exp.companyUrl && exp.companyUrl !== '#' ? (
-              <a
-                href={exp.companyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold transition-colors flex items-center gap-1 hover:underline underline-offset-2"
-                style={{ color: exp.companyColor }}
-              >
-                {exp.company}
-                <ExternalLink className="w-3 h-3" />
-              </a>
-            ) : (
-              <span className="font-semibold" style={{ color: exp.companyColor }}>
-                {exp.company}
-              </span>
-            )}
-            <span className="text-slate-700">·</span>
-            <span className="flex items-center gap-1 text-slate-400">
-              <Calendar className="w-3 h-3" />
-              {exp.duration}
-            </span>
-            <span className="text-slate-700">·</span>
-            <span className="flex items-center gap-1 text-slate-400">
-              <MapPin className="w-3 h-3" />
-              {exp.location}
-            </span>
-          </motion.div>
+          <Divider inView={inView} d={d} />
+          <Description exp={exp} inView={inView} d={d} />
+          <TechPills exp={exp} inView={inView} d={d} />
         </div>
+      )}
 
-        {/* Company initial badge */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5, rotate: -15 }}
-          animate={inView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
-          transition={{ type: 'spring', bounce: 0.5, delay: 0.15 }}
-          className="w-11 h-11 rounded-xl flex items-center justify-center text-lg font-black flex-shrink-0 border"
-          style={{
-            background: `${exp.companyColor}12`,
-            borderColor: `${exp.companyColor}25`,
-            color: exp.companyColor,
-          }}
-        >
-          {exp.companyInitial}
-        </motion.div>
+      {/* ══ MOBILE — always stacked ══ */}
+      <div className="lg:hidden relative z-10 py-10">
+        <div className="flex flex-col gap-5 mb-7">
+          <IndexAndRole exp={exp} inView={inView} num={num} d={d} />
+          <Meta exp={exp} inView={inView} d={d} align="left" />
+        </div>
+        <Divider inView={inView} d={d} />
+        <Description exp={exp} inView={inView} d={d} />
+        <TechPills exp={exp} inView={inView} d={d} />
       </div>
 
-      {/* Description */}
-      <motion.p
-        initial={{ opacity: 0, y: 8 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ delay: 0.28 }}
-        className="text-slate-400 text-sm leading-relaxed mb-5"
-      >
-        {exp.description}
-      </motion.p>
+    </div>
+  )
+}
 
-   
+/* ── Shared sub-components ── */
 
-      {/* Tech badges */}
-      <div className="flex flex-wrap gap-1.5">
-        {exp.tech.map((t, i) => (
-          <motion.div
-            key={t}
-            initial={{ opacity: 0, scale: 0.75 }}
+function EntryContent({ exp, inView, num, d }: { exp: Exp; inView: boolean; num: string; d: number }) {
+  return (
+    <div>
+      <div className="mb-8">
+        <IndexAndRole exp={exp} inView={inView} num={num} d={d} />
+      </div>
+      <Divider inView={inView} d={d} />
+      <Description exp={exp} inView={inView} d={d} />
+      <TechPills exp={exp} inView={inView} d={d} />
+    </div>
+  )
+}
+
+function IndexAndRole({ exp, inView, num, d }: { exp: Exp; inView: boolean; num: string; d: number }) {
+  return (
+    <div className="flex-1 min-w-0">
+      {/* Small index + CURRENT pill */}
+      <div className="flex items-center gap-3 mb-3">
+        <motion.span
+          initial={{ opacity: 0, x: -10 }}
+          animate={inView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.4, delay: 0.08 + d }}
+          className="text-[10px] font-mono tracking-[0.45em] tabular-nums"
+          style={{ color: 'rgba(255,255,255,0.18)' }}
+        >{num}</motion.span>
+
+        {exp.current && (
+          <motion.span
+            initial={{ opacity: 0, scale: 0.85 }}
             animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ delay: 0.55 + i * 0.04 }}
+            transition={{ delay: 0.18 + d }}
+            className="flex items-center gap-1.5 px-2 py-0.5 text-[9px] font-mono tracking-[0.2em]"
+            style={{ border: '1px solid rgba(52,211,153,0.22)', background: 'rgba(52,211,153,0.04)', color: 'rgba(52,211,153,0.75)', borderRadius: '2px' }}
           >
-            <Badge variant="default" className="text-[11px]">{t}</Badge>
-          </motion.div>
-        ))}
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-ping absolute h-full w-full rounded-full bg-emerald-400 opacity-55" />
+              <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            </span>
+            CURRENT
+          </motion.span>
+        )}
       </div>
+
+      {/* Role — mask reveal */}
+      <div className="overflow-hidden mb-2">
+        <motion.h3
+          initial={{ y: '105%' }}
+          animate={inView ? { y: 0 } : { y: '105%' }}
+          transition={{ duration: 0.72, delay: 0.12 + d, ease }}
+          className="font-black uppercase tracking-tight text-white"
+          style={{ fontSize: 'clamp(1.55rem, 3vw, 2.6rem)', lineHeight: 0.9 }}
+        >{exp.role}</motion.h3>
+      </div>
+
+      {/* Company */}
+      <motion.div
+        initial={{ opacity: 0, x: -8 }}
+        animate={inView ? { opacity: 1, x: 0 } : {}}
+        transition={{ duration: 0.45, delay: 0.22 + d }}
+      >
+        {exp.companyUrl && exp.companyUrl !== '#' ? (
+          <a
+            href={exp.companyUrl}
+            target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-sm font-semibold transition-opacity hover:opacity-65"
+            style={{ color: exp.companyColor }}
+          >
+            {exp.company}
+            <ArrowUpRight className="w-3.5 h-3.5 flex-shrink-0" />
+          </a>
+        ) : (
+          <span className="text-sm font-semibold" style={{ color: exp.companyColor }}>{exp.company}</span>
+        )}
+      </motion.div>
+    </div>
+  )
+}
+
+function Meta({ exp, inView, d, align }: { exp: Exp; inView: boolean; d: number; align: 'left' | 'right' }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.45, delay: 0.2 + d }}
+      className={`flex flex-col gap-2.5 flex-shrink-0 ${align === 'right' ? 'text-right items-end' : 'text-left items-start'}`}
+    >
+      <span className="text-sm font-mono" style={{ color: 'rgba(255,255,255,0.52)' }}>{exp.duration}</span>
+      <div className={`flex items-center gap-2 ${align === 'right' ? 'justify-end' : ''}`}>
+        <span
+          className="px-2 py-0.5 text-[10px] font-mono tracking-[0.15em]"
+          style={{ border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.38)', borderRadius: '2px' }}
+        >{exp.type}</span>
+        <span className="text-[10px] font-mono tracking-[0.2em]" style={{ color: 'rgba(255,255,255,0.22)' }}>{exp.location}</span>
+      </div>
+    </motion.div>
+  )
+}
+
+function Divider({ inView, d }: { inView: boolean; d: number }) {
+  return (
+    <motion.div
+      initial={{ scaleX: 0 }}
+      animate={inView ? { scaleX: 1 } : {}}
+      transition={{ duration: 0.6, delay: 0.3 + d, ease }}
+      className="h-px mb-7"
+      style={{ background: 'rgba(255,255,255,0.05)', transformOrigin: 'left' }}
+    />
+  )
+}
+
+function Description({ exp, inView, d }: { exp: Exp; inView: boolean; d: number }) {
+  return (
+    <motion.p
+      initial={{ opacity: 0, y: 8 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.55, delay: 0.33 + d }}
+      className="text-sm leading-[1.95] mb-7"
+      style={{ color: 'rgba(255,255,255,0.35)', maxWidth: '620px' }}
+    >{exp.description}</motion.p>
+  )
+}
+
+function TechPills({ exp, inView, d }: { exp: Exp; inView: boolean; d: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={inView ? { opacity: 1 } : {}}
+      transition={{ duration: 0.45, delay: 0.42 + d }}
+      className="flex flex-wrap gap-2"
+    >
+      {exp.tech.map((t, ti) => (
+        <motion.span
+          key={t}
+          initial={{ opacity: 0, y: 5 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.46 + d + ti * 0.04 }}
+          className="px-2.5 py-1 text-[11px] font-mono tracking-[0.1em]"
+          style={{ color: 'rgba(255,255,255,0.38)', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '2px' }}
+        >{t}</motion.span>
+      ))}
     </motion.div>
   )
 }

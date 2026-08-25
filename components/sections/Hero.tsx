@@ -1,256 +1,577 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { TypeAnimation } from 'react-type-animation'
-import { Mail, ArrowRight, Download } from 'lucide-react'
-import { GitHubIcon, LinkedInIcon } from '@/components/ui/BrandIcons'
+import { ArrowLeft } from 'lucide-react'
 import Image from 'next/image'
-import Link from 'next/link'
-import { heroContainer, heroItem } from '@/lib/variants'
+
+const ease: [number, number, number, number] = [0.76, 0, 0.24, 1]
 
 const socials = [
-  { icon: GitHubIcon, href: "https://github.com/shreyakatiyar", label: 'GitHub' },
-  { icon: LinkedInIcon, href: "https://www.linkedin.com/in/shreyakatiyar/", label: 'LinkedIn' },
-  // { icon: XTwitterIcon, href: personalInfo.twitter, label: 'Twitter' },
-  { icon: Mail, href: 'mailto:shreyakatiyar76@gmail.com', label: 'Email' },
+  { label: 'GITHUB',    href: 'https://github.com/shreya-katiyar'                       },
+  { label: 'LINKEDIN',  href: 'https://www.linkedin.com/in/shreyakatiyar/'              },
+  { label: 'INSTAGRAM', href: 'https://www.instagram.com/yrrrr_shreya/'                },
 ]
 
+const TOTAL_CARDS = 4
 
 export default function Hero() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [showAbout, setShowAbout] = useState(false)
+  const [cardIdx, setCardIdx]     = useState(0)
+  const [time, setTime]           = useState('')
+  const wheelLock  = useRef(false)
+  const cardIdxRef = useRef(0)
+  const panelRef   = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-
-    let width = (canvas.width = document.documentElement.clientWidth)
-    let height = (canvas.height = document.documentElement.clientHeight)
-    let animId: number
-
-    const particles: { x: number; y: number; r: number; vx: number; vy: number; alpha: number }[] = []
-    for (let i = 0; i < 55; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        r: Math.random() * 1.5 + 0.3,
-        vx: (Math.random() - 0.5) * 0.15,
-        vy: (Math.random() - 0.5) * 0.15,
-        alpha: Math.random() * 0.35 + 0.08,
-      })
+    const update = () => {
+      const d = new Date()
+      const h = d.getHours().toString().padStart(2, '0')
+      const m = d.getMinutes().toString().padStart(2, '0')
+      setTime(`${h} : ${m}`)
     }
-
-    const draw = () => {
-      ctx.clearRect(0, 0, width, height)
-      particles.forEach((p) => {
-        p.x += p.vx
-        p.y += p.vy
-        if (p.x < 0) p.x = width
-        if (p.x > width) p.x = 0
-        if (p.y < 0) p.y = height
-        if (p.y > height) p.y = 0
-        ctx.beginPath()
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(59,130,246,${p.alpha * 0.4})`
-        ctx.fill()
-      })
-      animId = requestAnimationFrame(draw)
-    }
-
-    draw()
-
-    const onResize = () => {
-      width = canvas.width = document.documentElement.clientWidth
-      height = canvas.height = document.documentElement.clientHeight
-    }
-    window.addEventListener('resize', onResize)
-    return () => {
-      cancelAnimationFrame(animId)
-      window.removeEventListener('resize', onResize)
-    }
+    update()
+    const id = setInterval(update, 1000)
+    return () => clearInterval(id)
   }, [])
 
+  // Keep ref in sync so native listener always reads latest index
+  useEffect(() => { cardIdxRef.current = cardIdx }, [cardIdx])
+
+  // Reset cards when panel closes
+  useEffect(() => {
+    if (!showAbout) setCardIdx(0)
+  }, [showAbout])
+
+  const goTo = (idx: number) => setCardIdx(Math.max(0, Math.min(TOTAL_CARDS - 1, idx)))
+  const closePanel = () => setShowAbout(false)
+
+  // Non-passive native wheel listener — fires before Lenis can process events
+  useEffect(() => {
+    const el = panelRef.current
+    if (!el) return
+    const onWheel = (e: WheelEvent) => {
+      if (!showAbout) return
+      e.preventDefault()
+      e.stopPropagation()
+      if (wheelLock.current) return
+      wheelLock.current = true
+      const cur = cardIdxRef.current
+      if (e.deltaY > 30)       goTo(cur + 1)
+      else if (e.deltaY < -30) goTo(cur - 1)
+      setTimeout(() => { wheelLock.current = false }, 800)
+    }
+    el.addEventListener('wheel', onWheel, { passive: false })
+    return () => el.removeEventListener('wheel', onWheel)
+  }, [showAbout])
+
   return (
-    <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
-      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />
-      <div className="absolute inset-0 grid-bg opacity-40" />
-
-      {/* Orbs */}
-      <motion.div
-        className="orb orb-indigo absolute top-1/4 -left-10 w-[600px] h-[600px]"
-        animate={{ x: [0, 40, 0], y: [0, -30, 0], scale: [1, 1.05, 1] }}
-        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-      />
-      <motion.div
-        className="orb orb-violet absolute bottom-1/4 -right-10 w-[500px] h-[500px]"
-        animate={{ x: [0, -30, 0], y: [0, 30, 0], scale: [1, 1.08, 1] }}
-        transition={{ duration: 13, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
-      />
-      <div
-        className="absolute inset-x-0 top-0 h-[600px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(59,130,246,0.08), transparent)' }}
-      />
-
-      {/* Two-column layout */}
-      <div className="relative z-10 max-w-6xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center pt-20 pb-10 min-h-screen">
-
-        {/* Left: text */}
-        <motion.div
-          variants={heroContainer}
-          initial="hidden"
-          animate="visible"
-          className="text-center lg:text-left"
+    <>
+    {/* ══════════  PANEL 1 — Hero  ══════════ */}
+    <div id="home" className="relative h-screen overflow-hidden">
+        <section
+          className="relative w-full h-full overflow-hidden"
         >
-          {/* Available badge */}
-          <motion.div variants={heroItem} className="flex justify-center lg:justify-start mb-8">
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-slate-700 bg-slate-800/60 text-slate-100 backdrop-blur-sm">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-500" />
-              </span>
-              Available for new opportunities
-            </div>
-          </motion.div>
-
-          {/* Greeting */}
-          <motion.p variants={heroItem} className="text-slate-400 text-base md:text-lg mb-4 tracking-[0.25em] uppercase font-medium">
-            Hello, I&apos;m
-          </motion.p>
-
-          {/* Name — letter by letter */}
-          <div className="mb-6 overflow-hidden">
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold leading-none tracking-tight">
-              {'Shreya Katiyar'.split('').map((char, i) => (
-                <motion.span
-                  key={i}
-                  initial={{ opacity: 0, y: 80, rotateX: -45 }}
-                  animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 + i * 0.035 }}
-                  className={char === ' ' ? 'inline-block w-4 md:w-6' : 'inline-block gradient-text'}
-                >
-                  {char}
-                </motion.span>
-              ))}
-            </h1>
+          {/* ── Full-bleed B&W photo ── */}
+          <div className="absolute inset-0">
+            <Image
+              src="/image.png"
+              alt="Shreya Katiyar"
+              fill priority
+              className="object-cover object-center"
+              style={{ filter: 'grayscale(100%) brightness(0.52) contrast(1.15)' }}
+            />
           </div>
 
-          {/* Role */}
-          <motion.div variants={heroItem} className="mb-6">
-            <div className="inline-flex items-center gap-3 text-xl md:text-2xl font-medium text-slate-400">
-              <span className="w-6 h-[1px] bg-blue-500" />
-              <TypeAnimation
-                sequence={[
-                  'Frontend Developer', 2500,
-                  'React Developer', 2500,
-                  'Next.js Engineer', 2500,
-                  'UI/UX Enthusiast', 2500,
-                ]}
-                repeat={Infinity}
-                className="text-slate-50"
-              />
-              <span className="w-6 h-[1px] bg-blue-500" />
-            </div>
-          </motion.div>
+          {/* Overlay layers */}
+          <div className="absolute inset-0" style={{ background: 'rgba(4,4,8,0.28)' }} />
+          {/* Bottom gradient — lifts name legibility */}
+          <div className="absolute inset-x-0 bottom-0 h-[55%] pointer-events-none"
+            style={{ background: 'linear-gradient(to top, rgba(4,4,8,0.88) 0%, rgba(4,4,8,0.4) 50%, transparent 100%)' }} />
+          {/* Top gradient */}
+          <div className="absolute inset-x-0 top-0 h-[22%] pointer-events-none"
+            style={{ background: 'linear-gradient(to bottom, rgba(4,4,8,0.7) 0%, transparent 100%)' }} />
 
-          {/* Description */}
-          <motion.p variants={heroItem} className="text-slate-400 text-base md:text-lg max-w-xl mx-auto lg:mx-0 mb-10 leading-relaxed">
-            Building beautiful, high-performance web applications with React & Next.js.
-            I turn complex problems into elegant interfaces that{' '}
-            <span className="text-slate-50">users love</span>.
-          </motion.p>
+          {/* ── All overlaid content ── */}
+          <div
+            className="absolute inset-0 flex flex-col z-10"
+            style={{ padding: '1.6rem max(1.5rem, calc((100vw - 72rem) / 2)) 1.8rem' }}
+          >
 
-          {/* CTA buttons */}
-          <motion.div variants={heroItem} className="flex flex-col sm:flex-row gap-4 items-center justify-center lg:justify-start mb-10">
-            <Link
-              href="#projects"
-              onClick={(e) => { e.preventDefault(); document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }) }}
-              className="inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white rounded-xl px-6 py-3 font-semibold transition-colors duration-300 shadow-lg shadow-blue-500/20"
+            {/* ── TOP BAR ── */}
+            <motion.div
+              initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="flex items-center justify-between"
             >
-              View My Work
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-            <a
-              href="/shreya.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-100 rounded-xl px-6 py-3 font-semibold transition-colors duration-300 border border-slate-600/40"
-            >
-              <Download className="w-4 h-4" />
-              Resume
-            </a>
-          </motion.div>
+              <span className="text-white/60 text-[10px] font-mono tracking-[0.4em]">SHREYA.DEV</span>
+              <span className="text-white/40 text-[10px] font-mono tracking-[0.3em]">{time}</span>
+              <nav className="hidden md:flex items-center gap-1">
+                {['HOME', 'PROJECTS', 'SKILLS', 'CONTACT'].map((item, i) => (
+                  <span key={item} className="flex items-center gap-1">
+                    {i > 0 && <span className="text-white/20 text-[10px] font-mono mx-1">/</span>}
+                    <a
+                      href={`#${item.toLowerCase()}`}
+                      className="text-white/50 text-[10px] font-mono tracking-[0.3em] hover:text-white/80 transition-colors duration-200"
+                    >{item}</a>
+                  </span>
+                ))}
+              </nav>
+              <a
+                href="#contact"
+                onClick={e => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }) }}
+                className="text-white/65 text-[10px] font-mono tracking-[0.3em] underline underline-offset-4 hover:text-white transition-colors duration-200"
+              >HIRE ME</a>
+            </motion.div>
 
-          {/* Social links */}
-          <motion.div variants={heroItem} className="flex items-center justify-center lg:justify-start gap-3">
-            {socials.map(({ icon: Icon, href, label }) => (
-              <motion.a
-                key={label}
-                href={href}
-                {...(label !== 'Email' && {
-    target: '_blank',
-    rel: 'noopener noreferrer',
-  })}
-                whileHover={{ scale: 1.08 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-3 rounded-xl border border-slate-600/30 hover:border-slate-600/60 text-slate-50/70 hover:text-slate-50 transition-all duration-200 hover:bg-slate-700/20"
-                aria-label={label}
+            {/* ── MIDDLE CONTENT ── */}
+            <div className="flex-1 flex items-center justify-between py-8">
+
+              {/* Left — Social links */}
+              <motion.div
+                initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="flex flex-col gap-3"
               >
-                <Icon className="w-5 h-5" />
-              </motion.a>
-            ))}
-          </motion.div>
-        </motion.div>
+                {socials.map(({ label, href }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank" rel="noopener noreferrer"
+                    className="text-white/45 text-[10px] font-mono tracking-[0.35em] hover:text-white/80 transition-colors duration-200"
+                  >{label}</a>
+                ))}
+              </motion.div>
 
-        {/* Right: illustration */}
-        <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, delay: 0.5 }}
-          className="hidden lg:flex items-center justify-center relative"
+              {/* Right — Bio block */}
+              <motion.div
+                initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.35 }}
+                className="max-w-[340px] text-right flex flex-col gap-5"
+              >
+                <p className="text-white/65 text-sm leading-[1.8]">
+                  I'm a Frontend Developer,
+                  specializing in React &amp; Next.js. Building performant,
+                  pixel-perfect experiences that users love.
+                </p>
+
+                <div className="flex items-start justify-end gap-8">
+                  <div className="text-right">
+                    <p className="text-white/30 text-[9px] font-mono tracking-[0.35em] mb-1">CURRENTLY AT</p>
+                    <p className="text-white/65 text-xs font-medium">MediCloud Global</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-white/30 text-[9px] font-mono tracking-[0.35em] mb-1">STATUS</p>
+                    <p className="text-white/65 text-xs font-medium flex items-center justify-end gap-1.5">
+                      <span className="relative flex h-1.5 w-1.5">
+      
+                      </span>
+                      Open to Work
+                    </p>
+                  </div>
+                </div>
+
+                {/* CTAs */}
+                <div className="flex items-center justify-end gap-2.5">
+                  <a
+                    href="#projects"
+                    onClick={e => { e.preventDefault(); document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }) }}
+                    className="px-5 py-2 bg-white text-[#040408] text-[10px] font-bold tracking-[0.15em] uppercase hover:bg-white/90 transition-colors duration-200"
+                    style={{ borderRadius: '2px' }}
+                  >View Work</a>
+                  <button
+                    onClick={() => setShowAbout(true)}
+                    className="px-5 py-2 text-[10px] font-mono tracking-[0.15em] uppercase text-white/50 hover:text-white/75 transition-colors duration-200"
+                    style={{ border: '1px solid rgba(255,255,255,0.2)', borderRadius: '2px' }}
+                  >Who am I?</button>
+                  <button
+                    onClick={() => window.open('/api/resume', '_blank', 'noopener,noreferrer')}
+                    className="px-5 py-2 text-[10px] font-mono tracking-[0.15em] uppercase text-white/40 hover:text-white/60 transition-colors duration-200"
+                    style={{ border: '1px solid rgba(255,255,255,0.12)', borderRadius: '2px' }}
+                  >Resume</button>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* ── BOTTOM BAR ── */}
+            <div className="flex items-end justify-between">
+
+              {/* HUGE editorial name — serif */}
+              <div className="select-none leading-none">
+                <div className="overflow-hidden">
+                  <motion.h1
+                    initial={{ y: '102%' }} animate={{ y: 0 }}
+                    transition={{ duration: 1, delay: 0.15, ease }}
+                    className="text-white font-black uppercase"
+                    style={{
+                      fontFamily: 'var(--font-display)',
+                      fontSize: 'clamp(3.2rem, 7vw, 10rem)',
+                      lineHeight: 0.86,
+                      letterSpacing: '-0.01em',
+                    }}
+                  >SHREYA</motion.h1>
+                </div>
+                <div className="overflow-hidden">
+                  <motion.h1
+                    initial={{ y: '102%' }} animate={{ y: 0 }}
+                    transition={{ duration: 1, delay: 0.22, ease }}
+                    className="text-white font-black uppercase"
+                    style={{
+                      fontFamily: 'var(--font-display)',
+                      fontSize: 'clamp(3.2rem, 7vw, 10rem)',
+                      lineHeight: 0.86,
+                      letterSpacing: '-0.01em',
+                    }}
+                  >
+                    {/* Invisible "S" to align K with the H in SHREYA */}
+                    <span aria-hidden style={{ visibility: 'hidden' }}>S</span>KATIYAR
+                  </motion.h1>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+    </div>
+
+      {/* ══════════  PANEL 2 — Who am I (fixed overlay) ══════════ */}
+      <motion.div
+        ref={panelRef}
+        initial={false}
+        animate={{ x: showAbout ? '0%' : '100%' }}
+        transition={{ duration: 0.9, ease }}
+        className="fixed inset-0 z-[60] overflow-hidden"
+        style={{ background: '#070b12' }}
+      >
+
+        {/* ── HEADER — editorial magazine layout ── */}
+        <div
+          className="absolute top-0 left-0 right-0 z-40 flex flex-col"
+          style={{
+            height: '280px',
+            padding: '0 clamp(2rem, 6vw, 5rem)',
+            background: '#070b12',
+            borderBottom: '1px solid rgba(255,255,255,0.06)',
+          }}
         >
-          <div className="relative w-full max-w-[380px] mx-auto">
-            {/* Glow blob */}
-            <div className="absolute inset-0 bg-blue-500/12 rounded-3xl blur-3xl scale-105 pointer-events-none" />
+          {/* Nav row */}
+          <div className="flex items-center justify-between" style={{ paddingTop: '1.4rem', paddingBottom: '1.2rem' }}>
+            <button
+              onClick={closePanel}
+              className="flex items-center gap-2 text-[9px] font-mono tracking-[0.4em] uppercase transition-all duration-200 hover:gap-3"
+              style={{ color: 'rgba(255,255,255,0.35)' }}
+            >
+              <ArrowLeft className="w-3 h-3" /> Back
+            </button>
+            <span className="font-mono text-[9px] tracking-[0.45em]" style={{ color: 'rgba(255,255,255,0.15)' }}>
+              SHREYA KATIYAR — {String(Math.min(cardIdx + 1, TOTAL_CARDS)).padStart(2,'0')} / {String(TOTAL_CARDS).padStart(2,'0')}
+            </span>
+          </div>
 
-            {/* Main image — animated border */}
-            <div className="img-animated-border rounded-3xl p-[1px] shadow-[0_8px_40px_rgba(0,0,0,0.3)]">
-              <div className="relative bg-slate-800/50 backdrop-blur-xl rounded-[23px] overflow-hidden">
-                <Image
-                  src="/h1.png"
-                  alt="Shreya Katiyar"
-                  width={380}
-                  height={390}
-                  className="w-full object-cover object-top"
-                  style={{ maxHeight: '560px' }}
-                  priority
-                />
+          {/* Thin rule */}
+          <div className="w-full h-px mb-5" style={{ background: 'rgba(255,255,255,0.05)' }} />
+
+          {/* Main header: WHO AM I + divider + bio + stats */}
+          <div className="flex gap-10 items-stretch flex-1 pb-5">
+
+            {/* Left — stacked display title */}
+            <div className="flex-shrink-0 flex flex-col justify-center select-none">
+              <div style={{ lineHeight: 0.82, letterSpacing: '-0.03em', fontFamily: 'var(--font-display)' }}>
+                <p className="font-black uppercase text-white"
+                  style={{ fontSize: 'clamp(2rem, 4vw, 4.5rem)' }}>WHO</p>
+                <p className="font-black uppercase"
+                  style={{ fontSize: 'clamp(2rem, 4vw, 4.5rem)', color: 'transparent', WebkitTextStroke: '1.5px rgba(255,255,255,0.2)' }}>AM</p>
+                <p className="font-black uppercase text-white"
+                  style={{ fontSize: 'clamp(2rem, 4vw, 4.5rem)' }}>I?</p>
+              </div>
+            </div>
+
+            {/* Vertical rule */}
+            <div className="flex-shrink-0 w-px self-stretch" style={{ background: 'rgba(255,255,255,0.07)' }} />
+
+            {/* Right — bio + stats */}
+            <div className="flex flex-col justify-between flex-1 min-w-0">
+              {/* Bio paragraph */}
+              <p className="leading-[1.9]" style={{ fontSize: 'clamp(12px, 1.1vw, 14px)', color: 'rgba(255,255,255,0.48)', maxWidth: '580px' }}>
+                Frontend developer crafting pixel-perfect, performant web experiences.<br />
+                Obsessed with clean code, thoughtful design, and the satisfying click<br className="hidden lg:block" />
+                of a well-placed component. Based in Kanpur — coding since the beginning.
+              </p>
+
+              {/* Stats row */}
+              <div className="flex items-center gap-0 flex-wrap">
+                {[
+                  { label: 'BASED IN', value: 'Kanpur, India' },
+                  { label: 'COLLEGE',  value: 'Rama University' },
+                  { label: 'CGPA',     value: '8.5 / 10' },
+                ].map((stat, i) => (
+                  <div key={stat.label} className="flex items-center gap-6">
+                    {i > 0 && <div className="w-px h-8 mx-6" style={{ background: 'rgba(255,255,255,0.07)' }} />}
+                    <div>
+                      <p className="font-mono mb-1" style={{ fontSize: '8px', letterSpacing: '0.45em', color: 'rgba(255,255,255,0.2)' }}>{stat.label}</p>
+                      <p className="font-semibold" style={{ fontSize: '12px', color: 'rgba(255,255,255,0.65)' }}>{stat.value}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
-      </div>
+        {/* Dot nav — right, centered in card area */}
+        <div
+          className="absolute right-5 z-30 flex flex-col gap-2.5 -translate-y-1/2"
+          style={{ top: 'calc(280px + 28vh)' }}
+        >
+          {Array.from({ length: TOTAL_CARDS }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              className="transition-all duration-300"
+              style={{
+                width: cardIdx === i ? 6 : 3,
+                height: cardIdx === i ? 6 : 3,
+                borderRadius: '50%',
+                background: cardIdx === i ? '#fff' : 'rgba(255,255,255,0.25)',
+              }}
+            />
+          ))}
+        </div>
 
-      {/* Scroll indicator — static wrapper handles centering, motion.div handles animation only */}
-      <div className="absolute bottom-8 inset-x-0 flex justify-center pointer-events-none">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 0.8 }}
-          className="flex flex-col items-center gap-2 text-slate-500"
+        {/* Sliding card stack */}
+        <div
+          className="absolute left-0 right-0 overflow-hidden flex flex-col items-center"
+          style={{ top: '280px', bottom: 0, paddingTop: '1.5rem' }}
         >
           <motion.div
-            className="flex flex-col items-center gap-2"
-            animate={{ y: [0, 6, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
+            animate={{ y: `calc(${-cardIdx} * (56vh + 2rem))` }}
+            transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+            className="flex flex-col items-center"
+            style={{ willChange: 'transform', width: 'min(96vw, 1280px)', gap: '2rem' }}
           >
-            <span className="text-[10px] tracking-[0.3em] uppercase text-slate-50">Scroll</span>
-            <div className="w-px h-8 bg-gradient-to-b from-slate-400/50 to-transparent" />
+            <InterestCard
+              index="01" label="LOVE" tag="— CATS"
+              heading="I love cats." quote="They don't judge my code."
+              sub="They just sit on my keyboard and silently judge me as a person instead."
+              image="/cat1.png" imgSide="right"
+              bg="#ede4d6" textColor="#1a1208" accentColor="#92400e"
+              accent2="#d97706"
+            />
+            <InterestCard
+              index="02" label="RITUAL" tag="— MUSIC"
+              heading="Retro at midnight." quote="Lo-fi hip hop forever."
+              sub="Old soul beats. Synth pads. Coding sessions that start at 11pm and end at sunrise."
+              image="/music.png" imgSide="left"
+              bg="#0d0820" textColor="#fff" accentColor="#c084fc"
+              accent2="#7c3aed"
+            />
+            <InterestCard
+              index="03" label="FREE TIME" tag="— NETFLIX"
+              heading="Netflix & chill." quote='"Just one more episode."'
+              sub="Me, every single night, since the dawn of streaming. No regrets. Zero."
+              image="/netflix.png" imgSide="right"
+              bg="#0f0000" textColor="#fff" accentColor="#f87171"
+              accent2="#dc2626"
+            />
+            <OutroCard active={cardIdx === 3} onBack={closePanel} />
           </motion.div>
+        </div>
+      </motion.div>
+    </>
+  )
+}
+
+/* ══ Interest Card — horizontal split layout ══ */
+function InterestCard({
+  index, label, tag, heading, quote, sub,
+  image, imgSide, bg, textColor, accentColor, accent2,
+}: {
+  index: string; label: string; tag: string
+  heading: string; quote: string; sub: string
+  image: string; imgSide: 'left' | 'right'
+  bg: string; textColor: string; accentColor: string; accent2: string
+}) {
+  const isDark = textColor === '#fff'
+
+  return (
+    <div
+      className="relative flex-shrink-0 flex overflow-hidden"
+      style={{ height: '56vh', width: '100%', background: bg, borderRadius: '14px' }}
+    >
+      {/* ── Image half (left) ── */}
+      {imgSide === 'left' && (
+        <div className="relative flex-shrink-0 overflow-hidden" style={{ width: '44%' }}>
+          <Image
+            src={image} alt={heading} fill
+            className="object-contain"
+            style={{ objectPosition: 'center', padding: '1.5rem', filter: 'drop-shadow(0 24px 48px rgba(0,0,0,0.35))' }}
+          />
+          {/* Gradient fade toward content side */}
+          <div className="absolute inset-0" style={{ background: `linear-gradient(to right, transparent 60%, ${bg})` }} />
+        </div>
+      )}
+
+      {/* ── Content half ── */}
+      <div className="relative flex flex-col justify-between flex-1 z-10"
+        style={{ padding: 'clamp(1.6rem, 3.5vh, 2.4rem) clamp(1.6rem, 3.5vw, 2.8rem)' }}>
+
+        {/* Ghost index number */}
+        <span
+          className="absolute font-black leading-none pointer-events-none select-none"
+          style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: 'clamp(7rem, 14vw, 13rem)',
+            color: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.05)',
+            right: '-0.5rem', bottom: '-1.5rem',
+            lineHeight: 1,
+          }}
+        >{index}</span>
+
+        {/* Top: index chip + label */}
+        <div className="flex items-center gap-3">
+          <span
+            className="font-mono text-[8px] tracking-[0.55em] uppercase px-2 py-1"
+            style={{
+              background: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)',
+              color: isDark ? 'rgba(255,255,255,0.35)' : `${textColor}66`,
+              borderRadius: '3px',
+            }}
+          >{index}</span>
+          <span className="font-mono text-[8px] tracking-[0.45em] uppercase"
+            style={{ color: isDark ? 'rgba(255,255,255,0.25)' : `${textColor}55` }}>{label}{tag}</span>
+        </div>
+
+        {/* Middle: main heading + quote */}
+        <div>
+          <h2
+            className="font-black uppercase tracking-tight leading-none mb-3"
+            style={{ fontSize: 'clamp(1.8rem, 3.8vw, 4.2rem)', color: accentColor }}
+          >{heading}</h2>
+          <p className="font-semibold italic mb-3" style={{ fontSize: 'clamp(13px, 1.2vw, 15px)', color: accentColor, opacity: 0.75 }}>
+            {quote}
+          </p>
+          <p className="leading-[1.85]" style={{ fontSize: 'clamp(11px, 1vw, 13px)', color: isDark ? 'rgba(255,255,255,0.38)' : `${textColor}77`, maxWidth: '340px' }}>
+            {sub}
+          </p>
+        </div>
+
+        {/* Bottom: scroll hint with accent line */}
+        <div className="flex items-center gap-3">
+          <div className="h-px w-8" style={{ background: accentColor, opacity: 0.5 }} />
+          <span className="font-mono text-[8px] tracking-[0.5em]"
+            style={{ color: isDark ? 'rgba(255,255,255,0.2)' : `${textColor}44` }}>SCROLL ↓</span>
+        </div>
+      </div>
+
+      {/* ── Image half (right) ── */}
+      {imgSide === 'right' && (
+        <div className="relative flex-shrink-0 overflow-hidden" style={{ width: '44%' }}>
+          {/* Gradient fade from content side */}
+          <div className="absolute inset-0 z-10" style={{ background: `linear-gradient(to left, transparent 60%, ${bg})` }} />
+          <Image
+            src={image} alt={heading} fill
+            className="object-contain"
+            style={{ objectPosition: 'center', padding: '1.5rem', filter: 'drop-shadow(0 24px 48px rgba(0,0,0,0.35))' }}
+          />
+        </div>
+      )}
+
+      {/* Accent left border */}
+      <div
+        className="absolute left-0 top-6 bottom-6 w-[3px] rounded-full"
+        style={{ background: `linear-gradient(to bottom, ${accent2}, transparent)` }}
+      />
+    </div>
+  )
+}
+
+/* ══ Outro card ══ */
+function OutroCard({ active, onBack }: { active: boolean; onBack: () => void }) {
+  const [countdown, setCountdown] = useState(5)
+
+  useEffect(() => {
+    if (!active) { setCountdown(5); return }
+    if (countdown <= 0) { onBack(); return }
+    const t = setTimeout(() => setCountdown(c => c - 1), 1000)
+    return () => clearTimeout(t)
+  }, [active, countdown, onBack])
+
+  const pct = ((5 - countdown) / 5) * 100
+  const R = 38
+
+  return (
+    <div
+      className="relative flex-shrink-0 overflow-hidden flex"
+      style={{ height: '56vh', width: '100%', borderRadius: '14px', background: '#06060f' }}
+    >
+      {/* cat2 full-bleed left */}
+      <div className="relative flex-shrink-0 overflow-hidden" style={{ width: '44%' }}>
+        <Image src="/cat2.png" alt="" fill className="object-cover object-center"
+          style={{ filter: 'grayscale(100%) brightness(0.35) contrast(1.1)' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, transparent 50%, #06060f)' }} />
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 flex flex-col justify-between flex-1"
+        style={{ padding: 'clamp(1.6rem, 3.5vh, 2.4rem) clamp(1.6rem, 3.5vw, 2.8rem)' }}>
+
+        {/* Label */}
+        <span className="font-mono text-[8px] tracking-[0.55em] uppercase px-2 py-1 self-start"
+          style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.3)', borderRadius: '3px' }}>
+          04 — THAT&apos;S ME
+        </span>
+
+        {/* Heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <h2 className="font-black uppercase text-white tracking-tight leading-none mb-4"
+            style={{ fontSize: 'clamp(2rem, 4vw, 4.5rem)', fontFamily: 'var(--font-display)' }}>
+            Now you<br />know me.
+          </h2>
+          <p className="font-mono text-[10px] tracking-[0.35em]" style={{ color: 'rgba(255,255,255,0.25)' }}>
+            Cat lover · Music head · Netflix addict
+          </p>
+        </motion.div>
+
+        {/* Countdown + back */}
+        <motion.div
+          className="flex items-center gap-5"
+          initial={{ opacity: 0 }}
+          animate={active ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+        >
+          <div className="relative cursor-pointer flex items-center justify-center" onClick={onBack}
+            style={{ width: 80, height: 80 }}>
+            <svg className="absolute inset-0 -rotate-90" width="80" height="80" viewBox="0 0 80 80">
+              <circle cx="40" cy="40" r={R} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="2" />
+              <circle cx="40" cy="40" r={R} fill="none" stroke="rgba(255,255,255,0.45)" strokeWidth="2"
+                strokeDasharray={`${2 * Math.PI * R}`}
+                strokeDashoffset={`${2 * Math.PI * R * (1 - pct / 100)}`}
+                strokeLinecap="round"
+                style={{ transition: 'stroke-dashoffset 0.9s linear' }}
+              />
+            </svg>
+            <div className="flex flex-col items-center">
+              <span className="text-white font-black text-lg leading-none">{countdown}</span>
+              <span className="font-mono text-[7px] tracking-[0.3em] mt-0.5" style={{ color: 'rgba(255,255,255,0.3)' }}>BACK</span>
+            </div>
+          </div>
+          <button
+            onClick={onBack}
+            className="flex items-center gap-2 font-mono text-[9px] tracking-[0.4em] uppercase hover:opacity-60 transition-opacity"
+            style={{ color: 'rgba(255,255,255,0.25)' }}
+          >
+            <ArrowLeft className="w-3 h-3" /> Back to Portfolio
+          </button>
         </motion.div>
       </div>
-    </section>
+
+      {/* Accent left border */}
+      <div className="absolute left-0 top-6 bottom-6 w-[3px] rounded-full"
+        style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,0.2), transparent)' }} />
+    </div>
   )
 }
