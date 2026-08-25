@@ -68,8 +68,7 @@ export default function CustomCursor() {
       <motion.div
         ref={cursorRef}
         className="fixed w-2 h-2 rounded-full -translate-x-1/2 -translate-y-1/2"
-        style={{ background: 'rgba(255,255,255,0.85)' }}
-        style={{ x: cursorX, y: cursorY }}
+        style={{ background: 'rgba(255,255,255,0.85)', x: cursorX, y: cursorY }}
       />
       {/* Ring */}
       <motion.div

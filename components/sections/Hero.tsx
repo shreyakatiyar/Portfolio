@@ -77,7 +77,7 @@ export default function Hero() {
             <Image
               src="/image.png"
               alt="Shreya Katiyar"
-              fill priority
+              fill priority sizes="100vw"
               className="object-cover object-center"
               style={{ filter: 'grayscale(100%) brightness(0.52) contrast(1.15)' }}
             />
@@ -402,7 +402,7 @@ function InterestCard({
       {imgSide === 'left' && (
         <div className="relative flex-shrink-0 overflow-hidden" style={{ width: '44%' }}>
           <Image
-            src={image} alt={heading} fill
+            src={image} alt={heading} fill sizes="44vw"
             className="object-contain"
             style={{ objectPosition: 'center', padding: '1.5rem', filter: 'drop-shadow(0 24px 48px rgba(0,0,0,0.35))' }}
           />
@@ -469,7 +469,7 @@ function InterestCard({
           {/* Gradient fade from content side */}
           <div className="absolute inset-0 z-10" style={{ background: `linear-gradient(to left, transparent 60%, ${bg})` }} />
           <Image
-            src={image} alt={heading} fill
+            src={image} alt={heading} fill sizes="44vw"
             className="object-contain"
             style={{ objectPosition: 'center', padding: '1.5rem', filter: 'drop-shadow(0 24px 48px rgba(0,0,0,0.35))' }}
           />
@@ -506,7 +506,7 @@ function OutroCard({ active, onBack }: { active: boolean; onBack: () => void }) 
     >
       {/* cat2 full-bleed left */}
       <div className="relative flex-shrink-0 overflow-hidden" style={{ width: '44%' }}>
-        <Image src="/cat2.png" alt="" fill className="object-cover object-center"
+        <Image src="/cat2.png" alt="" fill sizes="44vw" className="object-cover object-center"
           style={{ filter: 'grayscale(100%) brightness(0.35) contrast(1.1)' }} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, transparent 50%, #06060f)' }} />
       </div>
