@@ -14,7 +14,7 @@ const socials = [
   { idx: '01', label: 'GitHub',    handle: '/shreya-katiyar',       href: 'https://github.com/shreya-katiyar'                  },
   { idx: '02', label: 'LinkedIn',  handle: '/in/shreyakatiyar',     href: 'https://www.linkedin.com/in/shreyakatiyar/'         },
   { idx: '03', label: 'Instagram', handle: '@yrrrr_shreya',         href: 'https://www.instagram.com/yrrrr_shreya/'            },
-  { idx: '04', label: 'Email',     handle: 'katiyarshreya2019',     href: 'mailto:katiyarshreya2019@gmail.com'                 },
+  { idx: '04', label: 'Email',     handle: 'shreyakatiyar76',     href: 'mailto:shreyakatiyar76@gmail.com'                 },
 ]
 
 export default function Contact() {
@@ -69,7 +69,7 @@ export default function Contact() {
         >
           <div className="flex items-center gap-4 flex-1">
             <span className="font-mono text-[10px] tracking-[0.45em]"
-              style={{ color: 'rgba(255,255,255,0.22)' }}>06 / CONTACT</span>
+              style={{ color: 'rgba(255,255,255,0.5)' }}>06 / CONTACT</span>
             <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.06)' }} />
           </div>
           <motion.div
@@ -119,7 +119,7 @@ export default function Contact() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.45 }}
               className="hidden lg:block text-sm pb-3 leading-[1.8]"
-              style={{ color: 'rgba(255,255,255,0.3)', maxWidth: '260px' }}
+              style={{ color: 'rgba(255,255,255,0.62)', maxWidth: '260px' }}
             >
               Got a project, a role, or an idea?<br />Drop me a message — let's talk.
             </motion.p>
@@ -169,7 +169,7 @@ export default function Contact() {
                 {/* Corner label */}
                 <div className="absolute bottom-3 left-4 select-none">
                   <p className="text-[8px] font-mono tracking-[0.45em]"
-                    style={{ color: 'rgba(255,255,255,0.35)' }}>VERY SERIOUS.</p>
+                    style={{ color: 'rgba(255,255,255,0.7)' }}>VERY SERIOUS.</p>
                 </div>
               </div>
               {/* Floating badge */}
@@ -181,7 +181,7 @@ export default function Contact() {
                 style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '2px', backdropFilter: 'blur(4px)' }}
               >
                 <p className="text-[9px] font-mono tracking-[0.25em]"
-                  style={{ color: 'rgba(255,255,255,0.45)' }}>Let&apos;s talk 💬</p>
+                  style={{ color: 'rgba(255,255,255,0.75)' }}>Let&apos;s talk 💬</p>
               </motion.div>
             </motion.div>
 
@@ -191,7 +191,7 @@ export default function Contact() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.48 }}
               className="lg:hidden text-sm leading-[1.9]"
-              style={{ color: 'rgba(255,255,255,0.3)' }}
+              style={{ color: 'rgba(255,255,255,0.62)' }}
             >
               Got a project, a role, or an idea?<br />Drop me a message — let's talk.
             </motion.p>
@@ -212,9 +212,9 @@ export default function Contact() {
                 <div key={label} className="flex items-center justify-between py-3.5"
                   style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                   <span className="text-[10px] font-mono tracking-[0.3em] uppercase"
-                    style={{ color: 'rgba(255,255,255,0.2)' }}>{label}</span>
+                    style={{ color: 'rgba(255,255,255,0.5)' }}>{label}</span>
                   <span className="text-xs font-medium"
-                    style={{ color: 'rgba(255,255,255,0.55)' }}>{value}</span>
+                    style={{ color: 'rgba(255,255,255,0.82)' }}>{value}</span>
                 </div>
               ))}
             </motion.div>
@@ -247,13 +247,13 @@ export default function Contact() {
                     style={{ fontSize: 'clamp(2rem, 4vw, 3.8rem)', lineHeight: 0.88, letterSpacing: '-0.015em' }}
                   >Message<br />Received.</motion.div>
                 </div>
-                <p className="text-sm leading-[1.9] mt-2" style={{ color: 'rgba(255,255,255,0.35)', maxWidth: '360px' }}>
+                <p className="text-sm leading-[1.9] mt-2" style={{ color: 'rgba(255,255,255,0.7)', maxWidth: '360px' }}>
                   Thanks for reaching out — I&apos;ll get back to you within 24 hours.
                 </p>
                 <button
                   onClick={() => setStatus('idle')}
                   className="self-start text-[10px] font-mono tracking-[0.3em] uppercase transition-opacity hover:opacity-60 mt-4"
-                  style={{ color: 'rgba(255,255,255,0.35)' }}
+                  style={{ color: 'rgba(255,255,255,0.7)' }}
                 >← Send another</button>
               </div>
             ) : (
@@ -262,7 +262,7 @@ export default function Contact() {
                 {/* Form header */}
                 <div className="flex items-center gap-3 mb-2">
                   <span className="text-[9px] font-mono tracking-[0.5em] uppercase"
-                    style={{ color: 'rgba(255,255,255,0.18)' }}>Send a message</span>
+                    style={{ color: 'rgba(255,255,255,0.45)' }}>Send a message</span>
                   <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.05)' }} />
                 </div>
 
@@ -287,7 +287,7 @@ export default function Contact() {
                     </p>
                   ) : (
                     <p className="text-[10px] font-mono tracking-[0.3em]"
-                      style={{ color: 'rgba(255,255,255,0.16)' }}>REPLIES WITHIN 24H</p>
+                      style={{ color: 'rgba(255,255,255,0.4)' }}>REPLIES WITHIN 24H</p>
                   )}
 
                   <button
@@ -343,15 +343,15 @@ export default function Contact() {
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <span className="text-[8px] font-mono tracking-[0.4em] flex-shrink-0"
-                    style={{ color: 'rgba(255,255,255,0.2)' }}>{s.idx}</span>
+                    style={{ color: 'rgba(255,255,255,0.5)' }}>{s.idx}</span>
                   <div className="min-w-0">
                     <p className="text-sm font-semibold text-white leading-none mb-1 transition-opacity duration-200 group-hover:opacity-55">{s.label}</p>
                     <p className="text-[10px] font-mono truncate"
-                      style={{ color: 'rgba(255,255,255,0.2)' }}>{s.handle}</p>
+                      style={{ color: 'rgba(255,255,255,0.5)' }}>{s.handle}</p>
                   </div>
                 </div>
                 <ArrowUpRight className="w-3.5 h-3.5 flex-shrink-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  style={{ color: 'rgba(255,255,255,0.18)' }} />
+                  style={{ color: 'rgba(255,255,255,0.45)' }} />
               </a>
             ))}
           </div>
@@ -366,9 +366,9 @@ export default function Contact() {
           style={{ borderTop: '1px solid rgba(255,255,255,0.04)' }}
         >
           <span className="pt-6 font-mono text-[9px] tracking-[0.45em]"
-            style={{ color: 'rgba(255,255,255,0.12)' }}>SHREYA KATIYAR · FRONTEND DEVELOPER</span>
+            style={{ color: 'rgba(255,255,255,0.38)' }}>SHREYA KATIYAR · FRONTEND DEVELOPER</span>
           <span className="pt-6 font-mono text-[9px] tracking-[0.35em]"
-            style={{ color: 'rgba(255,255,255,0.08)' }}>INDIA · © 2025</span>
+            style={{ color: 'rgba(255,255,255,0.3)' }}>INDIA · © 2025</span>
         </motion.div>
 
       </div>
@@ -387,7 +387,7 @@ function LineField({
   return (
     <div className="flex flex-col gap-2.5">
       <label htmlFor={id} className="text-[9px] font-mono tracking-[0.45em] uppercase select-none"
-        style={{ color: 'rgba(255,255,255,0.22)' }}>{label}</label>
+        style={{ color: 'rgba(255,255,255,0.5)' }}>{label}</label>
       <input
         id={id} name={id} type={type} value={value} onChange={onChange} required={required}
         className="bg-transparent w-full text-sm text-white outline-none pb-3 transition-colors duration-300"
@@ -411,7 +411,7 @@ function LineTextarea({
   return (
     <div className="flex flex-col gap-2.5">
       <label htmlFor={id} className="text-[9px] font-mono tracking-[0.45em] uppercase select-none"
-        style={{ color: 'rgba(255,255,255,0.22)' }}>{label}</label>
+        style={{ color: 'rgba(255,255,255,0.5)' }}>{label}</label>
       <textarea
         id={id} name={id} value={value} onChange={onChange} required={required}
         rows={5} placeholder=""

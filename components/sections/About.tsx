@@ -48,7 +48,7 @@ export default function About() {
           className="flex items-center gap-4 mb-16"
         >
           <span className="text-[10px] font-mono tracking-[0.45em]"
-            style={{ color: 'rgba(255,255,255,0.22)' }}>02 / ABOUT</span>
+            style={{ color: 'rgba(255,255,255,0.5)' }}>02 / ABOUT</span>
           <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.06)' }} />
         </motion.div>
 
@@ -88,7 +88,7 @@ export default function About() {
                   animate={isInView ? { y: 0 } : { y: '102%' }}
                   transition={{ duration: 0.6, delay: 0.28, ease }}
                   className="text-[10px] font-mono tracking-[0.45em] uppercase"
-                  style={{ color: 'rgba(255,255,255,0.2)' }}
+                  style={{ color: 'rgba(255,255,255,0.5)' }}
                 >One pixel at a time</motion.p>
               </div>
             </div>
@@ -101,17 +101,17 @@ export default function About() {
               className="space-y-4"
               style={{ maxWidth: '500px' }}
             >
-              <p className="text-sm leading-[1.95]" style={{ color: 'rgba(255,255,255,0.4)' }}>
+              <p className="text-sm leading-[1.95]" style={{ color: 'rgba(255,255,255,0.72)' }}>
                 I&apos;m a{' '}
                 <span style={{ color: 'rgba(255,255,255,0.8)' }} className="font-semibold">
                   Frontend Developer
                 </span>{' '}
                 who cares deeply about the craft — not just making things work,
                 but making them feel{' '}
-                <em style={{ color: 'rgba(255,255,255,0.6)', fontStyle: 'italic' }}>right</em>.
+                <em style={{ color: 'rgba(255,255,255,0.85)', fontStyle: 'italic' }}>right</em>.
                 I specialize in React &amp; Next.js, with a designer&apos;s eye for every pixel.
               </p>
-              <p className="text-sm leading-[1.95]" style={{ color: 'rgba(255,255,255,0.26)' }}>
+              <p className="text-sm leading-[1.95]" style={{ color: 'rgba(255,255,255,0.6)' }}>
                 Currently shipping healthcare e-commerce at{' '}
                 <a
                   href="https://www.linkedin.com/company/medicloudglobal/?originalSubdomain=in"
@@ -142,7 +142,7 @@ export default function About() {
             >
               <span
                 className="block mb-4 text-[10px] font-mono tracking-[0.4em] select-none"
-                style={{ color: 'rgba(255,255,255,0.18)' }}
+                style={{ color: 'rgba(255,255,255,0.45)' }}
               >STACK</span>
               <div className="flex flex-wrap gap-2">
                 {stack.map((tech, i) => (
@@ -153,7 +153,7 @@ export default function About() {
                     transition={{ delay: 0.56 + i * 0.055 }}
                     className="px-3 py-1.5 text-[11px] font-mono tracking-[0.12em]"
                     style={{
-                      color: 'rgba(255,255,255,0.45)',
+                      color: 'rgba(255,255,255,0.75)',
                       background: 'rgba(255,255,255,0.04)',
                       border: '1px solid rgba(255,255,255,0.08)',
                       borderRadius: '2px',
@@ -185,11 +185,11 @@ export default function About() {
                   <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-400" />
                 </span>
                 <span className="text-[10px] font-mono tracking-[0.3em]"
-                  style={{ color: 'rgba(255,255,255,0.32)' }}>AVAILABLE FOR WORK</span>
+                  style={{ color: 'rgba(255,255,255,0.65)' }}>AVAILABLE FOR WORK</span>
               </div>
               <span className="h-3 w-px" style={{ background: 'rgba(255,255,255,0.1)' }} />
               <span className="text-[10px] font-mono tracking-[0.3em]"
-                style={{ color: 'rgba(255,255,255,0.18)' }}>B.TECH · COMPUTER SCIENCE</span>
+                style={{ color: 'rgba(255,255,255,0.45)' }}>B.TECH · COMPUTER SCIENCE</span>
             </motion.div>
 
           </div>
@@ -228,9 +228,9 @@ export default function About() {
               {/* Overlaid label inside photo bottom-left */}
               <div className="absolute bottom-4 left-5 z-10 select-none">
                 <p className="text-[9px] font-mono tracking-[0.4em]"
-                  style={{ color: 'rgba(255,255,255,0.35)' }}>SHREYA KATIYAR</p>
+                  style={{ color: 'rgba(255,255,255,0.7)' }}>SHREYA KATIYAR</p>
                 <p className="text-[9px] font-mono tracking-[0.35em] mt-0.5"
-                  style={{ color: 'rgba(255,255,255,0.2)' }}>INDIA · 2025</p>
+                  style={{ color: 'rgba(255,255,255,0.5)' }}>INDIA · 2025</p>
               </div>
             </motion.div>
           </div>
@@ -275,7 +275,7 @@ export default function About() {
               {/* Label at top */}
               <span
                 className="font-mono text-[8px] tracking-[0.45em] uppercase"
-                style={{ color: 'rgba(255,255,255,0.22)', whiteSpace: 'pre-line', lineHeight: 1.7 }}
+                style={{ color: 'rgba(255,255,255,0.5)', whiteSpace: 'pre-line', lineHeight: 1.7 }}
               >{label}</span>
 
               {/* Big value at bottom */}

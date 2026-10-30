@@ -24,7 +24,7 @@ export default function Skills() {
 
       <div ref={ref} className="container-width">
         <motion.div initial={{ opacity: 0, y: 10 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }} className="flex items-center gap-4 mb-16">
-          <span className="font-mono text-[10px] tracking-[0.45em]" style={{ color: 'rgba(255,255,255,0.22)' }}>04 / SKILLS</span>
+          <span className="font-mono text-[10px] tracking-[0.45em]" style={{ color: 'rgba(255,255,255,0.5)' }}>04 / SKILLS</span>
           <div className="flex-1 h-px bg-white/[0.06]" />
         </motion.div>
 
@@ -63,7 +63,7 @@ export default function Skills() {
             className="lg:text-right"
             style={{ maxWidth: '320px' }}
           >
-            <p className="text-sm leading-[1.85] mb-4" style={{ color: 'rgba(255,255,255,0.35)' }}>
+            <p className="text-sm leading-[1.85] mb-4" style={{ color: 'rgba(255,255,255,0.7)' }}>
               Technologies and tools I use to bring ideas to life.<br className="hidden lg:block" />
               Always learning, always growing.
             </p>
@@ -74,7 +74,7 @@ export default function Skills() {
                   className="font-mono text-[9px] tracking-[0.3em] px-2.5 py-1"
                   style={{
                     border: '1px solid rgba(255,255,255,0.08)',
-                    color: 'rgba(255,255,255,0.3)',
+                    color: 'rgba(255,255,255,0.62)',
                     borderRadius: '2px',
                   }}
                 >{t}</span>
@@ -87,14 +87,14 @@ export default function Skills() {
           className="flex flex-col lg:flex-row items-center gap-12 mb-12 border border-white/[0.06] p-8 md:p-10"
           style={{ background: 'rgba(13,20,32,0.7)', borderRadius: '3px' }}>
           <div className="flex-1 text-center lg:text-left">
-            <p className="font-mono text-[10px] tracking-[0.4em] uppercase mb-3" style={{ color: 'rgba(255,255,255,0.22)' }}>Overall Proficiency</p>
+            <p className="font-mono text-[10px] tracking-[0.4em] uppercase mb-3" style={{ color: 'rgba(255,255,255,0.5)' }}>Overall Proficiency</p>
             <h3 className="text-3xl md:text-4xl font-black uppercase tracking-tight text-white leading-tight mb-4">Expertise across<br />three disciplines</h3>
-            <p className="text-sm leading-relaxed max-w-sm mx-auto lg:mx-0" style={{ color: 'rgba(255,255,255,0.38)' }}>Measured across skills within each category — from UI development and design systems to API integration and tooling.</p>
+            <p className="text-sm leading-relaxed max-w-sm mx-auto lg:mx-0" style={{ color: 'rgba(255,255,255,0.7)' }}>Measured across skills within each category — from UI development and design systems to API integration and tooling.</p>
             <div className="flex flex-wrap gap-4 mt-6 justify-center lg:justify-start">
               {proficiency.map((p) => (
                 <div key={p.label} className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full" style={{ background: p.toColor }} />
-                  <span className="text-xs font-mono" style={{ color: 'rgba(255,255,255,0.42)' }}>{p.label}</span>
+                  <span className="text-xs font-mono" style={{ color: 'rgba(255,255,255,0.72)' }}>{p.label}</span>
                 </div>
               ))}
             </div>
@@ -157,7 +157,7 @@ function SkillNetwork() {
 
   return (
     <motion.div ref={networkRef} initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: 0.1 }} className="mt-12">
-      <p className="text-center text-sm font-mono mb-6 uppercase tracking-[0.35em]" style={{ color: 'rgba(255,255,255,0.18)' }}>Skill Network — hover any node to explore</p>
+      <p className="text-center text-sm font-mono mb-6 uppercase tracking-[0.35em]" style={{ color: 'rgba(255,255,255,0.45)' }}>Skill Network — hover any node to explore</p>
       <div className="relative w-full" style={{ paddingBottom: '40%' }}>
         <div className="absolute inset-0">
           <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
@@ -200,11 +200,11 @@ function SkillNetwork() {
       <div className="flex justify-center gap-8 mt-3">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full" style={{ border: '2px solid rgba(255,255,255,0.45)', background: 'rgba(255,255,255,0.1)' }} />
-          <span className="text-xs font-mono" style={{ color: 'rgba(255,255,255,0.45)' }}>Proficient</span>
+          <span className="text-xs font-mono" style={{ color: 'rgba(255,255,255,0.75)' }}>Proficient</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full" style={{ border: '2px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.04)' }} />
-          <span className="text-xs font-mono" style={{ color: 'rgba(255,255,255,0.22)' }}>Exploring</span>
+          <span className="text-xs font-mono" style={{ color: 'rgba(255,255,255,0.5)' }}>Exploring</span>
         </div>
       </div>
     </motion.div>
@@ -227,7 +227,7 @@ function TechMarquee() {
       <div className="absolute right-0 top-0 bottom-0 w-28 z-10 pointer-events-none" style={{ background: 'linear-gradient(to left, #070b12 10%, transparent)' }} />
       <div className="marquee-track flex whitespace-nowrap">
         {items.map((item, i) => (
-          <span key={i} className="inline-flex items-center gap-2.5 mx-7 text-sm font-medium tracking-wide select-none" style={{ color: 'rgba(255,255,255,0.35)' }}>
+          <span key={i} className="inline-flex items-center gap-2.5 mx-7 text-sm font-medium tracking-wide select-none" style={{ color: 'rgba(255,255,255,0.7)' }}>
             <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: item.dot, boxShadow: `0 0 6px ${item.dot}80` }} />
             {item.name}
           </span>
@@ -272,7 +272,7 @@ function ProficiencyBar({ data, index }: { data: (typeof proficiency)[0]; index:
       </div>
       <div className="text-center">
         <p className="text-sm font-semibold text-white">{data.label}</p>
-        <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.32)' }}>{data.sub}</p>
+        <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.65)' }}>{data.sub}</p>
       </div>
     </div>
   )

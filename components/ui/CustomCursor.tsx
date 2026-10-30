@@ -14,7 +14,7 @@ export default function CustomCursor() {
   const ringY = useSpring(cursorY, { damping: 20, stiffness: 150, mass: 0.8 })
 
   useEffect(() => {
-    if (window.matchMedia('(max-width: 768px)').matches) return
+    if (!window.matchMedia('(pointer: fine) and (min-width: 769px)').matches) return
 
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX - 4)
@@ -47,7 +47,7 @@ export default function CustomCursor() {
 
     const interactiveElements = document.querySelectorAll('a, button, [role="button"], input, textarea, select, label')
 
-    window.addEventListener('mousemove', moveCursor)
+    window.addEventListener('mousemove', moveCursor, { passive: true })
     interactiveElements.forEach((el) => {
       el.addEventListener('mouseenter', onEnterInteractive)
       el.addEventListener('mouseleave', onLeaveInteractive)
@@ -73,7 +73,7 @@ export default function CustomCursor() {
       {/* Ring */}
       <motion.div
         ref={ringRef}
-        className="fixed w-8 h-8 rounded-full -translate-x-1/2 -translate-y-1/2 transition-all duration-200"
+        className="fixed w-8 h-8 rounded-full -translate-x-1/2 -translate-y-1/2 transition-[width,height,border-color,background-color] duration-200"
         style={{ border: '1px solid rgba(255,255,255,0.25)', x: ringX, y: ringY, marginLeft: '-12px', marginTop: '-12px' }}
       />
     </div>

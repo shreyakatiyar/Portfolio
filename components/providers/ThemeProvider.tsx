@@ -23,33 +23,17 @@ export function useTheme() {
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>('dark')
 
-  useEffect(() => {
-    const stored = localStorage.getItem('theme')
-    if (stored === 'light') {
-      setThemeState('light')
-    } else if (stored === 'dark') {
-      setThemeState('dark')
-    } else {
-      // Respect system preference; default to dark
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      setThemeState(prefersDark ? 'dark' : 'light')
-    }
-  }, [])
-
-  const setTheme = useCallback((next: string) => {
-    const t = next === 'light' ? 'light' : 'dark'
-    setThemeState(t)
-    localStorage.setItem('theme', t)
-    const root = document.documentElement
-    root.classList.remove('dark', 'light')
-    root.classList.add(t)
+  // The site is designed dark-only (hardcoded dark section backgrounds), so the
+  // theme is locked to dark — light mode made text invisible on those sections.
+  const setTheme = useCallback((_next: string) => {
+    setThemeState('dark')
   }, [])
 
   useEffect(() => {
     const root = document.documentElement
     root.classList.remove('dark', 'light')
-    root.classList.add(theme)
-    localStorage.setItem('theme', theme)
+    root.classList.add('dark')
+    localStorage.setItem('theme', 'dark')
   }, [theme])
 
   return (

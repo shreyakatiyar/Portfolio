@@ -3,7 +3,7 @@ import { readFileSync } from 'fs'
 import { join } from 'path'
 
 export async function GET() {
-  const pdfPath = join(process.cwd(), 'public', 'ShReYa_KaTiYaR (4).pdf')
+  const pdfPath = join(process.cwd(), 'public', 'Shreya_Katiyar_Resume.pdf')
   const pdf = readFileSync(pdfPath)
 
   return new NextResponse(pdf, {
@@ -12,7 +12,7 @@ export async function GET() {
       'Content-Type':        'application/pdf',
       'Content-Disposition': 'inline; filename="Shreya_Katiyar_Resume.pdf"',
       'Content-Length':      pdf.length.toString(),
-      'Cache-Control':       'public, max-age=3600',
+      'Cache-Control':       'public, max-age=0, must-revalidate',
     },
   })
 }

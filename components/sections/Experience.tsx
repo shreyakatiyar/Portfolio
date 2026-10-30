@@ -33,7 +33,7 @@ export default function Experience() {
           className="flex items-center gap-4 mb-16"
         >
           <span className="text-[10px] font-mono tracking-[0.45em]"
-            style={{ color: 'rgba(255,255,255,0.22)' }}>02 / EXPERIENCE</span>
+            style={{ color: 'rgba(255,255,255,0.5)' }}>02 / EXPERIENCE</span>
           <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.06)' }} />
         </motion.div>
 
@@ -120,13 +120,13 @@ function ExperienceEntry({ exp, index, flipped = false }: { exp: Exp; index: num
               className="relative z-10 flex flex-col gap-3 mt-auto"
               style={{ paddingTop: 'clamp(4rem, 10vw, 7rem)' }}
             >
-              <span className="text-sm font-mono" style={{ color: 'rgba(255,255,255,0.52)' }}>{exp.duration}</span>
+              <span className="text-sm font-mono" style={{ color: 'rgba(255,255,255,0.8)' }}>{exp.duration}</span>
               <div className="flex items-center gap-2">
                 <span
                   className="px-2 py-0.5 text-[10px] font-mono tracking-[0.15em]"
-                  style={{ border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.38)', borderRadius: '2px' }}
+                  style={{ border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.7)', borderRadius: '2px' }}
                 >{exp.type}</span>
-                <span className="text-[10px] font-mono tracking-[0.2em]" style={{ color: 'rgba(255,255,255,0.22)' }}>{exp.location}</span>
+                <span className="text-[10px] font-mono tracking-[0.2em]" style={{ color: 'rgba(255,255,255,0.5)' }}>{exp.location}</span>
               </div>
             </motion.div>
           </div>
@@ -197,7 +197,7 @@ function IndexAndRole({ exp, inView, num, d }: { exp: Exp; inView: boolean; num:
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.4, delay: 0.08 + d }}
           className="text-[10px] font-mono tracking-[0.45em] tabular-nums"
-          style={{ color: 'rgba(255,255,255,0.18)' }}
+          style={{ color: 'rgba(255,255,255,0.45)' }}
         >{num}</motion.span>
 
         {exp.current && (
@@ -260,13 +260,13 @@ function Meta({ exp, inView, d, align }: { exp: Exp; inView: boolean; d: number;
       transition={{ duration: 0.45, delay: 0.2 + d }}
       className={`flex flex-col gap-2.5 flex-shrink-0 ${align === 'right' ? 'text-right items-end' : 'text-left items-start'}`}
     >
-      <span className="text-sm font-mono" style={{ color: 'rgba(255,255,255,0.52)' }}>{exp.duration}</span>
+      <span className="text-sm font-mono" style={{ color: 'rgba(255,255,255,0.8)' }}>{exp.duration}</span>
       <div className={`flex items-center gap-2 ${align === 'right' ? 'justify-end' : ''}`}>
         <span
           className="px-2 py-0.5 text-[10px] font-mono tracking-[0.15em]"
-          style={{ border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.38)', borderRadius: '2px' }}
+          style={{ border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.7)', borderRadius: '2px' }}
         >{exp.type}</span>
-        <span className="text-[10px] font-mono tracking-[0.2em]" style={{ color: 'rgba(255,255,255,0.22)' }}>{exp.location}</span>
+        <span className="text-[10px] font-mono tracking-[0.2em]" style={{ color: 'rgba(255,255,255,0.5)' }}>{exp.location}</span>
       </div>
     </motion.div>
   )
@@ -291,7 +291,7 @@ function Description({ exp, inView, d }: { exp: Exp; inView: boolean; d: number 
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.55, delay: 0.33 + d }}
       className="text-sm leading-[1.95] mb-7"
-      style={{ color: 'rgba(255,255,255,0.35)', maxWidth: '620px' }}
+      style={{ color: 'rgba(255,255,255,0.7)', maxWidth: '620px' }}
     >{exp.description}</motion.p>
   )
 }
@@ -311,7 +311,7 @@ function TechPills({ exp, inView, d }: { exp: Exp; inView: boolean; d: number })
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.46 + d + ti * 0.04 }}
           className="px-2.5 py-1 text-[11px] font-mono tracking-[0.1em]"
-          style={{ color: 'rgba(255,255,255,0.38)', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '2px' }}
+          style={{ color: 'rgba(255,255,255,0.7)', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '2px' }}
         >{t}</motion.span>
       ))}
     </motion.div>

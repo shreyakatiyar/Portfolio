@@ -35,7 +35,7 @@ export default function Projects() {
           transition={{ duration: 0.5 }}
           className="flex items-center gap-4 mb-16"
         >
-          <span className="font-mono text-[10px] tracking-[0.45em]" style={{ color: 'rgba(255,255,255,0.22)' }}>03 / PROJECTS</span>
+          <span className="font-mono text-[10px] tracking-[0.45em]" style={{ color: 'rgba(255,255,255,0.5)' }}>03 / PROJECTS</span>
           <div className="flex-1 h-px bg-white/[0.06]" />
         </motion.div>
 
@@ -76,16 +76,16 @@ export default function Projects() {
             className="lg:max-w-[320px] flex flex-col gap-4 lg:pb-1"
           >
             <div className="h-px" style={{ background: 'rgba(255,255,255,0.06)' }} />
-            <p className="text-sm leading-[1.9]" style={{ color: 'rgba(255,255,255,0.35)' }}>
+            <p className="text-sm leading-[1.9]" style={{ color: 'rgba(255,255,255,0.7)' }}>
               Six projects across fitness, AI, education, and design.
               Hover any card to explore — click to visit the live deployment.
             </p>
             <div className="flex items-center gap-3">
               <span className="text-[10px] font-mono tracking-[0.35em]"
-                style={{ color: 'rgba(255,255,255,0.18)' }}>6 PROJECTS</span>
+                style={{ color: 'rgba(255,255,255,0.45)' }}>6 PROJECTS</span>
               <span className="w-1 h-1 rounded-full" style={{ background: 'rgba(255,255,255,0.15)' }} />
               <span className="text-[10px] font-mono tracking-[0.35em]"
-                style={{ color: 'rgba(255,255,255,0.18)' }}>DEPLOYED</span>
+                style={{ color: 'rgba(255,255,255,0.45)' }}>DEPLOYED</span>
             </div>
           </motion.div>
 
@@ -135,7 +135,7 @@ export default function Projects() {
         animate={isInView ? { opacity: 1 } : {}}
         transition={{ delay: 0.9 }}
         className="text-center text-xs mt-4 tracking-widest uppercase font-mono"
-        style={{ color: 'rgba(255,255,255,0.18)' }}
+        style={{ color: 'rgba(255,255,255,0.45)' }}
       >
         hover to preview · click to open
       </motion.p>
@@ -187,7 +187,7 @@ function ProjectCard({ project }: { project: Project }) {
 
         <div className="text-center relative z-10">
           <p className="text-white font-bold text-lg leading-tight">{project.title}</p>
-          <p className="text-xs mt-1 tracking-widest uppercase font-mono" style={{ color: 'rgba(255,255,255,0.35)' }}>
+          <p className="text-xs mt-1 tracking-widest uppercase font-mono" style={{ color: 'rgba(255,255,255,0.7)' }}>
             {project.subtitle}
           </p>
         </div>
@@ -225,7 +225,7 @@ function ProjectCard({ project }: { project: Project }) {
           {project.title}
         </p>
 
-        <p className="text-xs text-center leading-relaxed line-clamp-3" style={{ color: 'rgba(255,255,255,0.55)' }}>
+        <p className="text-xs text-center leading-relaxed line-clamp-3" style={{ color: 'rgba(255,255,255,0.82)' }}>
           {project.description}
         </p>
 
@@ -234,7 +234,7 @@ function ProjectCard({ project }: { project: Project }) {
             <span
               key={t}
               className="text-[9px] px-2 py-0.5 border border-white/10"
-              style={{ color: 'rgba(255,255,255,0.38)', borderRadius: '2px', background: 'rgba(255,255,255,0.05)' }}
+              style={{ color: 'rgba(255,255,255,0.7)', borderRadius: '2px', background: 'rgba(255,255,255,0.05)' }}
             >
               {t}
             </span>
@@ -247,7 +247,7 @@ function ProjectCard({ project }: { project: Project }) {
             whileHover={{ scale: 1.15 }}
             whileTap={{ scale: 0.92 }}
             className="p-2 border border-white/15 transition-colors cursor-pointer"
-            style={{ color: 'rgba(255,255,255,0.55)', borderRadius: '2px', background: 'rgba(255,255,255,0.07)' }}
+            style={{ color: 'rgba(255,255,255,0.82)', borderRadius: '2px', background: 'rgba(255,255,255,0.07)' }}
           >
             <GitHubIcon className="w-4 h-4" />
           </motion.div>

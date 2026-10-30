@@ -41,7 +41,7 @@ export default function Achievements() {
           className="flex items-center gap-4 mb-16"
         >
           <span className="font-mono text-[10px] tracking-[0.45em]"
-            style={{ color: 'rgba(255,255,255,0.22)' }}>05 / ACHIEVEMENTS</span>
+            style={{ color: 'rgba(255,255,255,0.5)' }}>05 / ACHIEVEMENTS</span>
           <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.06)' }} />
         </motion.div>
 
@@ -78,7 +78,7 @@ export default function Achievements() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.32 }}
             className="text-sm leading-[1.8] lg:text-right"
-            style={{ color: 'rgba(255,255,255,0.28)', maxWidth: '280px' }}
+            style={{ color: 'rgba(255,255,255,0.6)', maxWidth: '280px' }}
           >
             Six milestones across performance,<br className="hidden lg:block" /> product, and craft.
           </motion.p>
@@ -137,7 +137,7 @@ function AchCard({
       {/* Index */}
       <div className="flex items-center justify-between mb-auto">
         <span className="text-[9px] font-mono tracking-[0.5em]"
-          style={{ color: 'rgba(255,255,255,0.2)' }}>{num}</span>
+          style={{ color: 'rgba(255,255,255,0.5)' }}>{num}</span>
       </div>
 
       {/* Metric — the visual hero */}
@@ -168,7 +168,7 @@ function AchCard({
 
       {/* Description */}
       <p className="text-xs leading-[1.85]"
-        style={{ color: 'rgba(255,255,255,0.25)' }}>
+        style={{ color: 'rgba(255,255,255,0.58)' }}>
         {achievement.description}
       </p>
     </motion.div>

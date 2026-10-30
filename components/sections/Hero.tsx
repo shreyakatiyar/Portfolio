@@ -8,20 +8,19 @@ import Image from 'next/image'
 const ease: [number, number, number, number] = [0.76, 0, 0.24, 1]
 
 const socials = [
+  { label: 'EMAIL',     href: 'mailto:shreyakatiyar76@gmail.com'                        },
   { label: 'GITHUB',    href: 'https://github.com/shreya-katiyar'                       },
   { label: 'LINKEDIN',  href: 'https://www.linkedin.com/in/shreyakatiyar/'              },
-  { label: 'INSTAGRAM', href: 'https://www.instagram.com/yrrrr_shreya/'                },
+  { label: 'INSTAGRAM', href: 'https://www.instagram.com/yrrrr_shreya/' 
+
+                 },
 ]
 
 const TOTAL_CARDS = 4
 
-export default function Hero() {
-  const [showAbout, setShowAbout] = useState(false)
-  const [cardIdx, setCardIdx]     = useState(0)
-  const [time, setTime]           = useState('')
-  const wheelLock  = useRef(false)
-  const cardIdxRef = useRef(0)
-  const panelRef   = useRef<HTMLDivElement>(null)
+/* Isolated so the per-minute tick doesn't re-render the whole Hero */
+function Clock() {
+  const [time, setTime] = useState('')
 
   useEffect(() => {
     const update = () => {
@@ -34,6 +33,16 @@ export default function Hero() {
     const id = setInterval(update, 1000)
     return () => clearInterval(id)
   }, [])
+
+  return <span className="text-white/70 text-[10px] font-mono tracking-[0.3em]">{time}</span>
+}
+
+export default function Hero() {
+  const [showAbout, setShowAbout] = useState(false)
+  const [cardIdx, setCardIdx]     = useState(0)
+  const wheelLock  = useRef(false)
+  const cardIdxRef = useRef(0)
+  const panelRef   = useRef<HTMLDivElement>(null)
 
   // Keep ref in sync so native listener always reads latest index
   useEffect(() => { cardIdxRef.current = cardIdx }, [cardIdx])
@@ -105,14 +114,14 @@ export default function Hero() {
               className="flex items-center justify-between"
             >
               <span className="text-white/60 text-[10px] font-mono tracking-[0.4em]">SHREYA.DEV</span>
-              <span className="text-white/40 text-[10px] font-mono tracking-[0.3em]">{time}</span>
+              <Clock />
               <nav className="hidden md:flex items-center gap-1">
                 {['HOME', 'PROJECTS', 'SKILLS', 'CONTACT'].map((item, i) => (
                   <span key={item} className="flex items-center gap-1">
-                    {i > 0 && <span className="text-white/20 text-[10px] font-mono mx-1">/</span>}
+                    {i > 0 && <span className="text-white/50 text-[10px] font-mono mx-1">/</span>}
                     <a
                       href={`#${item.toLowerCase()}`}
-                      className="text-white/50 text-[10px] font-mono tracking-[0.3em] hover:text-white/80 transition-colors duration-200"
+                      className="text-white/75 text-[10px] font-mono tracking-[0.3em] hover:text-white/80 transition-colors duration-200"
                     >{item}</a>
                   </span>
                 ))}
@@ -138,7 +147,7 @@ export default function Hero() {
                     key={label}
                     href={href}
                     target="_blank" rel="noopener noreferrer"
-                    className="text-white/45 text-[10px] font-mono tracking-[0.35em] hover:text-white/80 transition-colors duration-200"
+                    className="text-white/70 text-[10px] font-mono tracking-[0.35em] hover:text-white/80 transition-colors duration-200"
                   >{label}</a>
                 ))}
               </motion.div>
@@ -157,11 +166,11 @@ export default function Hero() {
 
                 <div className="flex items-start justify-end gap-8">
                   <div className="text-right">
-                    <p className="text-white/30 text-[9px] font-mono tracking-[0.35em] mb-1">CURRENTLY AT</p>
+                    <p className="text-white/60 text-[9px] font-mono tracking-[0.35em] mb-1">CURRENTLY AT</p>
                     <p className="text-white/65 text-xs font-medium">MediCloud Global</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-white/30 text-[9px] font-mono tracking-[0.35em] mb-1">STATUS</p>
+                    <p className="text-white/60 text-[9px] font-mono tracking-[0.35em] mb-1">STATUS</p>
                     <p className="text-white/65 text-xs font-medium flex items-center justify-end gap-1.5">
                       <span className="relative flex h-1.5 w-1.5">
       
@@ -181,12 +190,12 @@ export default function Hero() {
                   >View Work</a>
                   <button
                     onClick={() => setShowAbout(true)}
-                    className="px-5 py-2 text-[10px] font-mono tracking-[0.15em] uppercase text-white/50 hover:text-white/75 transition-colors duration-200"
+                    className="px-5 py-2 text-[10px] font-mono tracking-[0.15em] uppercase text-white/75 hover:text-white/75 transition-colors duration-200"
                     style={{ border: '1px solid rgba(255,255,255,0.2)', borderRadius: '2px' }}
                   >Who am I?</button>
                   <button
                     onClick={() => window.open('/api/resume', '_blank', 'noopener,noreferrer')}
-                    className="px-5 py-2 text-[10px] font-mono tracking-[0.15em] uppercase text-white/40 hover:text-white/60 transition-colors duration-200"
+                    className="px-5 py-2 text-[10px] font-mono tracking-[0.15em] uppercase text-white/70 hover:text-white/60 transition-colors duration-200"
                     style={{ border: '1px solid rgba(255,255,255,0.12)', borderRadius: '2px' }}
                   >Resume</button>
                 </div>
@@ -259,11 +268,11 @@ export default function Hero() {
             <button
               onClick={closePanel}
               className="flex items-center gap-2 text-[9px] font-mono tracking-[0.4em] uppercase transition-all duration-200 hover:gap-3"
-              style={{ color: 'rgba(255,255,255,0.35)' }}
+              style={{ color: 'rgba(255,255,255,0.7)' }}
             >
               <ArrowLeft className="w-3 h-3" /> Back
             </button>
-            <span className="font-mono text-[9px] tracking-[0.45em]" style={{ color: 'rgba(255,255,255,0.15)' }}>
+            <span className="font-mono text-[9px] tracking-[0.45em]" style={{ color: 'rgba(255,255,255,0.4)' }}>
               SHREYA KATIYAR — {String(Math.min(cardIdx + 1, TOTAL_CARDS)).padStart(2,'0')} / {String(TOTAL_CARDS).padStart(2,'0')}
             </span>
           </div>
@@ -292,7 +301,7 @@ export default function Hero() {
             {/* Right — bio + stats */}
             <div className="flex flex-col justify-between flex-1 min-w-0">
               {/* Bio paragraph */}
-              <p className="leading-[1.9]" style={{ fontSize: 'clamp(12px, 1.1vw, 14px)', color: 'rgba(255,255,255,0.48)', maxWidth: '580px' }}>
+              <p className="leading-[1.9]" style={{ fontSize: 'clamp(12px, 1.1vw, 14px)', color: 'rgba(255,255,255,0.78)', maxWidth: '580px' }}>
                 Frontend developer crafting pixel-perfect, performant web experiences.<br />
                 Obsessed with clean code, thoughtful design, and the satisfying click<br className="hidden lg:block" />
                 of a well-placed component. Based in Kanpur — coding since the beginning.
@@ -308,8 +317,8 @@ export default function Hero() {
                   <div key={stat.label} className="flex items-center gap-6">
                     {i > 0 && <div className="w-px h-8 mx-6" style={{ background: 'rgba(255,255,255,0.07)' }} />}
                     <div>
-                      <p className="font-mono mb-1" style={{ fontSize: '8px', letterSpacing: '0.45em', color: 'rgba(255,255,255,0.2)' }}>{stat.label}</p>
-                      <p className="font-semibold" style={{ fontSize: '12px', color: 'rgba(255,255,255,0.65)' }}>{stat.value}</p>
+                      <p className="font-mono mb-1" style={{ fontSize: '8px', letterSpacing: '0.45em', color: 'rgba(255,255,255,0.5)' }}>{stat.label}</p>
+                      <p className="font-semibold" style={{ fontSize: '12px', color: 'rgba(255,255,255,0.88)' }}>{stat.value}</p>
                     </div>
                   </div>
                 ))}
@@ -517,7 +526,7 @@ function OutroCard({ active, onBack }: { active: boolean; onBack: () => void }) 
 
         {/* Label */}
         <span className="font-mono text-[8px] tracking-[0.55em] uppercase px-2 py-1 self-start"
-          style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.3)', borderRadius: '3px' }}>
+          style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.62)', borderRadius: '3px' }}>
           04 — THAT&apos;S ME
         </span>
 
@@ -531,7 +540,7 @@ function OutroCard({ active, onBack }: { active: boolean; onBack: () => void }) 
             style={{ fontSize: 'clamp(2rem, 4vw, 4.5rem)', fontFamily: 'var(--font-display)' }}>
             Now you<br />know me.
           </h2>
-          <p className="font-mono text-[10px] tracking-[0.35em]" style={{ color: 'rgba(255,255,255,0.25)' }}>
+          <p className="font-mono text-[10px] tracking-[0.35em]" style={{ color: 'rgba(255,255,255,0.58)' }}>
             Cat lover · Music head · Netflix addict
           </p>
         </motion.div>
@@ -556,13 +565,13 @@ function OutroCard({ active, onBack }: { active: boolean; onBack: () => void }) 
             </svg>
             <div className="flex flex-col items-center">
               <span className="text-white font-black text-lg leading-none">{countdown}</span>
-              <span className="font-mono text-[7px] tracking-[0.3em] mt-0.5" style={{ color: 'rgba(255,255,255,0.3)' }}>BACK</span>
+              <span className="font-mono text-[7px] tracking-[0.3em] mt-0.5" style={{ color: 'rgba(255,255,255,0.62)' }}>BACK</span>
             </div>
           </div>
           <button
             onClick={onBack}
             className="flex items-center gap-2 font-mono text-[9px] tracking-[0.4em] uppercase hover:opacity-60 transition-opacity"
-            style={{ color: 'rgba(255,255,255,0.25)' }}
+            style={{ color: 'rgba(255,255,255,0.58)' }}
           >
             <ArrowLeft className="w-3 h-3" /> Back to Portfolio
           </button>

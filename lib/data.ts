@@ -28,7 +28,7 @@ export const experiences = [
     companyInitial: 'M',
     companyColor: '#3B82F6',
     companyUrl: 'https://www.linkedin.com/company/medicloudglobal/?originalSubdomain=in',
-    duration: 'Mar 2025 – Present',
+    duration: 'Mar 2026 – Present',
     type: 'Full-time',
     location: 'Remote',
     description:
@@ -43,7 +43,7 @@ export const experiences = [
     companyInitial: 'N',
     companyColor: '#8B5CF6',
     companyUrl: 'https://www.linkedin.com/company/nts-nihon-global/?originalSubdomain=in',
-    duration: 'Jun 2025 – Aug 2025',
+    duration: 'Jun 2025 – Sep 2025',
     type: 'Internship',
     location: 'Remote',
     description:
@@ -58,7 +58,7 @@ export const experiences = [
     companyInitial: 'R',
     companyColor: '#10B981',
     companyUrl: 'https://rixilab.tech/',
-    duration: 'Aug 2025 – Sep 2025',
+    duration: 'Oct 2025 – Dec 2025',
     type: 'Internship',
     location: 'Remote',
     description:

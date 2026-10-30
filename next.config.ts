@@ -3,18 +3,13 @@ import type { NextConfig } from 'next'
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [],
+    // Serve AVIF where supported (much smaller than WebP for photos), WebP otherwise
+    formats: ['image/avif', 'image/webp'],
+    // Optimized images are content-hashed by URL — cache them for 30 days
+    minimumCacheTTL: 60 * 60 * 24 * 30,
   },
-  async headers() {
-    return [
-      {
-        source: '/rsm1.pdf',
-        headers: [
-          { key: 'Content-Type',        value: 'application/pdf' },
-          { key: 'Content-Disposition', value: 'inline; filename="Shreya_Katiyar_Resume.pdf"' },
-          { key: 'Cache-Control',       value: 'public, max-age=3600' },
-        ],
-      },
-    ]
+  experimental: {
+    optimizePackageImports: ['framer-motion', 'lucide-react'],
   },
 }
 
